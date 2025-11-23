@@ -123,11 +123,11 @@ function displayResults() {
                             錄取人數: ${spots}
                         </span>
                         <span class="standard">
-                            篩選標準: ${standard}
+                            加權平均: ${standard}
                         </span>
                         ${percentage !== undefined ? 
                             `<span class="standard">
-                                達標比例: ${percentage}%
+                                達標考生佔比: ${percentage}%
                             </span>` : ''
                         }
                     </div>
