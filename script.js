@@ -126,7 +126,7 @@ function displayResults() {
 
     html += `
         <div class="current-criteria-box">
-            <h4>115 學年度 篩選標準</h4>
+            <h4>115年 篩選標準</h4>
             <div class="criteria-row-display">
                 <p>${criteriaHtml}</p>
                 <p>${multiplierHtml}</p>
@@ -152,7 +152,7 @@ function displayResults() {
         // 構建結果的 HTML 結構
         html += `
             <div class="data-entry">
-                <h3 class="year-title">${year}年 篩選標準:</h3>
+                <h3 class="year-title">${year}年 篩選標準</h3>
                 
                 <div class="entry-content">
                     <p class="criteria-text">
