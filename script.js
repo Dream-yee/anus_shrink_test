@@ -114,7 +114,7 @@ function displayResults() {
     
     if (AST_entries.length > 0) {
         AST_entries.forEach(([subject, multiplier]) => {
-            const formattedMultiplier = (parseFloat(multiplier) || 0).toFixed(2);
+            const formattedMultiplier = (parseFloat(multiplier) || 0);
             multiplierHtml += `<span class="data-tag multiplier-tag">${subject} <b>${formattedMultiplier}</b></span>`;
         });
     }
@@ -126,7 +126,7 @@ function displayResults() {
 
     html += `
         <div class="current-criteria-box">
-            <h4>115年 篩選標準</h4>
+            <h4>115年 篩選標準 核定名額: ${new_standards[uni][dept]["核定人數"]}人</h4>
             <div class="criteria-row-display">
                 <p>${criteriaHtml}</p>
                 <p>${multiplierHtml}</p>
