@@ -245,6 +245,98 @@ body {
     margin-top: 30px;
     animation: slideIn 0.5s ease-out;
 }
+/* --- Fancy and Orange Themed Styles for the Current Criteria Box --- */
+
+/* 1. 容器樣式：窄化內邊距 (上下寬度) 和柔和橘色背景 */
+.current-criteria-box {
+    /* 窄化上下 padding: 從 25px 調整為 15px */
+    padding: 15px 25px; 
+    
+    background-color: #fffaf0; /* 淺橘色/奶油色 */
+    border: 2px solid #ff7f50; /* 深橘色邊框 */
+    box-shadow: 0 6px 15px rgba(255, 140, 0, 0.25);
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+/* 2. 獨立頂部標題：115年 篩選標準 */
+.current-criteria-box .box-title {
+    color: #963e00; /* 較深的橘棕色 */
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* 3. 科系標題和子標題樣式 */
+.current-criteria-box h2 {
+    color: #333;
+    font-size: 26px;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.current-criteria-box h4 {
+    color: #ff8c00; /* OrangeRed */
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ffaa5a; /* 稍微收窄分隔線寬度 */
+    padding-bottom: 5px;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+/* 4. 數據行樣式 (調整垂直間距) */
+.criteria-row-display {
+    /* 減少區塊之間的下外邊距：從 15px 調整到 10px */
+    margin-bottom: 10px; 
+    
+    /* 減少區塊內部的上下內邊距：從 8px 調整到 5px */
+    padding: 5px 10px;
+    
+    border-left: 5px solid #ff8c00; 
+    border-radius: 4px;
+}
+
+.criteria-row-display h5 {
+    /* 減少標題下外邊距：從 5px 調整到 3px，使其更靠近內容 */
+    margin-bottom: 3px; 
+    
+    color: #4b4b4b;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 3px; /* 增加一點點上邊距，但整體仍然很窄 */
+}
+
+/* 5. 數據標籤樣式 (微調標籤大小，使其更貼合內容) */
+.data-tag {
+    display: inline-block;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    /* 減少標籤上下內邊距：從 5px 調整到 3px */
+    padding: 3px 10px; 
+    margin-right: 8px;
+    /* 減少標籤下外邊距：從 5px 調整到 4px */
+    margin-bottom: 4px; 
+    border-radius: 6px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 🌟 柔和強調色 🌟 */
+.data-tag b {
+    /* 均標/前標/A級：使用柔和的藍灰色，看起來舒服、不刺眼 */
+    color: #f87400; /* Bootstrap Primary Blue 是一個舒服的選擇 */
+    font-weight: 700;
+}
+
+.data-tag.multiplier-tag b {
+    /* 倍率：使用柔和的灰綠色 */
+    color: #f87400; /* Bootstrap Success Green 也是一個舒服的選擇 */
+    font-weight: 700;
+}
 
 @keyframes slideIn {
     from { opacity: 0; transform: translateY(10px); }

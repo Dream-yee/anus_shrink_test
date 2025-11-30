@@ -1,162 +1,225 @@
-import csv
+from bs4 import BeautifulSoup
 import json
 import re
-from collections import defaultdict
 from typing import Dict, Any
 
-def convert_division_exam_data(csv_filepath, json_filepath):
-    """
-    讀取分科測驗 CSV 數據，將其轉換為按學校分組的 JSON 格式。
-    在轉換過程中，將錄取標準由加權總分轉換為加權平均分數。
-    
-    Args:
-        csv_filepath (str): 輸入 CSV 檔案的路徑。
-        json_filepath (str): 輸出 JSON 檔案的路徑。
-    """
-    
-    # 科目名稱簡寫與全名的對應字典
-    SUBJECT_MAP = {
-        "國": "國文", "英": "英文", "自": "自然", "社": "社會", 
-        "物": "物理", "化": "化學", "生": "生物", "歷": "歷史", 
-        "地": "地理", "公": "公民", "數甲": "數甲", "數乙": "數乙", 
-        "數A": "數A", "數B": "數B"
-    }
+# 假定 HTML 檔案路徑
+HTML_FILE = '115學年度校系分則查詢系統.html'
+# 輸出 JSON 檔案路徑
+OUTPUT_JSON_FILE = 'extracted_dept_info.json'
 
-    # 最終儲存結果的字典結構：{學校: {科系: {資料}}}
-    output_data = defaultdict(lambda: defaultdict(dict))
-    processed_rows = 0
+# 科目名稱簡寫對應
+SUBJECT_ABBR_MAP = {
+    "數學甲": "數甲", "數學 A": "數A", "數學B": "數B",
+    "國文": "國文", "英文": "英文", "物　理": "物理", 
+    "化　學": "化學", "生　物": "生物", "歷史": "歷史", 
+    "地理": "地理", "公民與社會": "公民", "英　聽": "英聽"
+}
 
-    try:
-        # 關鍵變更：將 delimiter 設定為 ',' (逗號)
-        with open(csv_filepath, 'r', encoding='utf-8', newline='') as csvfile:
-            reader = csv.reader(csvfile, delimiter=',')
+def clean_subject_name(name: str) -> str:
+    """清理科目名稱，移除括號內的內容並轉換為簡寫。"""
+    # 1. 移除括號內容 (學測/分科)
+    name = re.sub(r'\s*\(.*?\)', '', name).strip()
+    # 2. 轉換為簡寫，並移除中文全形空格
+    name = name.replace('　', '').strip()
+    return SUBJECT_ABBR_MAP.get(name, name)
+
+def parse_criteria(criteria_html: str) -> Dict[str, str]:
+    """解析學測檢定標準 (e.g., '數學 A (均標)')."""
+    criteria = {}
+    
+    # 查找所有 <li> 標籤
+    soup = BeautifulSoup(criteria_html, 'html.parser')
+    list_items = soup.find_all(['li', 'div']) # 考慮可能是 div 或 li
+
+    if not list_items:
+        # 如果沒有 <li>，嘗試直接從文本解析
+        text = soup.get_text(separator=' ', strip=True)
+        items = text.split('<br>')
+    else:
+        # 從 ol/ul/li 結構中提取文本
+        items = [item.get_text(separator=' ', strip=True) for item in list_items]
+
+    for item in items:
+        item = item.strip()
+        if not item:
+            continue
             
-            for i, row in enumerate(reader):
+        # 尋找 科目 (標準) 的模式
+        match = re.search(r'(.+?)\s*\((\S+)\)', item)
+        if match:
+            subject_raw = match.group(1).strip()
+            standard = match.group(2).strip()
+            
+            subject_name = clean_subject_name(subject_raw)
+            
+            if subject_name and standard:
+                criteria[subject_name] = standard
                 
-                if not row:
-                    continue
-                    
-                dept_code_raw = row[0].strip()
-                if not re.match(r'^\d+$', dept_code_raw):
-                    continue
+    return criteria
 
-                cleaned_row = [item.strip() for item in row]
-                
-                if len(cleaned_row) < 6:
-                    print(f"警告：跳過行 {i+1}，數據欄位不足，僅找到 {len(cleaned_row)} 個欄位。")
-                    continue
+def parse_multiplier(multiplier_text: str) -> Dict[str, float]:
+    """解析科目倍數及加權 (e.g., '數學甲(分科) x 1.00')."""
+    multipliers = {}
+    
+    # 查找 科目 (括號內容可有可無) x 數字 的模式
+    match = re.search(r'(.+?)x\s*(\d+\.?\d*)', multiplier_text)
+    
+    if match:
+        subject_raw = match.group(1).strip()
+        multiplier_str = match.group(2).strip()
+        
+        subject_name = clean_subject_name(subject_raw)
+        
+        try:
+            multiplier = float(multiplier_str)
+            if subject_name:
+                multipliers[subject_name] = multiplier
+        except ValueError:
+            pass
+            
+    return multipliers
 
-
-                try:
-                    university = cleaned_row[1]
-                    department = cleaned_row[2]
-                    criteria_str = cleaned_row[3]
-                    admitted_count = int(cleaned_row[4])
-                    
-                    # --- 處理一般考生錄取分數 (索引 5) ---
-                    standard_general = None
-                    general_raw = cleaned_row[5].strip()
-                    
-                    if general_raw != '------' and general_raw.replace('.', '', 1).isdigit():
-                        standard_general = float(general_raw)
-                    
-                    if standard_general is None:
-                         # 如果一般生錄取分數無效，則跳過此行
-                         continue
-
-                    # --- 處理原住民考生錄取分數 (索引 6) ---
-                    standard_indigenous = None
-                    if len(cleaned_row) > 6 and cleaned_row[6]:
-                        indigenous_raw = cleaned_row[6].strip()
-                        
-                        if indigenous_raw != '------' and indigenous_raw.replace('.', '', 1).isdigit():
-                            standard_indigenous = float(indigenous_raw)
-                        
-                except (IndexError, ValueError) as e:
-                    print(f"警告：跳過行 {i+1}，數據解析錯誤: {e}，原始數據: {cleaned_row}")
-                    continue
-
-                # --- 3. 解析科目倍數 (Criteria Parsing) ---
-                
-                subject_multipliers: Dict[str, float] = {}
-                weighted_sum: float = 0.0  # 用於計算加權總倍數 (W_total)
-                
-                criteria_items = criteria_str.split()
-                
-                for item in criteria_items:
-                    if 'x' in item:
-                        parts = item.split('x')
-                        if len(parts) == 2:
-                            abbr = parts[0].strip()
-                            multiplier_str = parts[1].strip()
-                            
-                            full_name = SUBJECT_MAP.get(abbr, abbr)
-                            
-                            try:
-                                multiplier = float(multiplier_str)
-                                subject_multipliers[full_name] = multiplier
-                                weighted_sum += multiplier  # 累計加權總倍數
-                            except ValueError:
-                                print(f"警告：科系 {university}-{department} 的倍數 '{multiplier_str}' 無法轉換為數字。")
-                                continue
-
-                # --- 4. 執行分數轉換：總分 -> 平均分數 ---
-                
-                new_general_average = None
-                new_indigenous_average = None
-                
-                if weighted_sum > 0:
-                    # 一般考生：總分 / 加權總倍數
-                    new_general_average = round(standard_general / weighted_sum, 2)
-                    
-                    if standard_indigenous is not None:
-                        # 原住民考生：(總分 / 1.35) / 加權總倍數
-                        # 1.35 代表 35% 加分
-                        adjusted_score = standard_indigenous / 1.35 
-                        new_indigenous_average = round(adjusted_score / weighted_sum, 2)
-                else:
-                    print(f"警告：科系 {university}-{department} 的加權總倍數為 0，無法計算平均分數。")
-                    # 如果無法計算平均分，則保留原始總分
-                    new_general_average = standard_general
-                    new_indigenous_average = standard_indigenous
+def extract_university_name(soup: BeautifulSoup) -> str:
+    """從查詢條件中提取學校名稱。"""
+    # 查找包含查詢條件文本的 div
+    search_div = soup.find('div', id='search')
+    if not search_div:
+        return "未知學校"
+    
+    # 查詢條件文本在第一個 <p class="title"> 之後的 div 中
+    target_div = search_div.find('p', class_='title').find_next('div')
+    
+    if target_div:
+        text = target_div.get_text(strip=True)
+        # 假設格式是 "學校名稱-學系名稱..."
+        if '-' in text:
+            return text.split('-')[0].strip()
+            
+    return "未知學校"
 
 
-                # --- 5. 構建輸出結構 ---
-                
-                department_data: Dict[str, Any] = {
-                    "科目倍數": subject_multipliers,
-                    "錄取人數": admitted_count,
-                    # 替換為計算後的平均分數
-                    "一般考生錄取標準": new_general_average, 
-                }
-                
-                if new_indigenous_average is not None:
-                    # 替換為計算後的平均分數
-                    department_data["原住民考生錄取標準"] = new_indigenous_average
-                
-                output_data[university][department] = department_data
-                processed_rows += 1
-
-        # --- 6. 輸出 JSON 檔案 ---
-        final_output = dict(output_data)
-
-        with open(json_filepath, 'w', encoding='utf-8') as jsonfile:
-            json.dump(final_output, jsonfile, ensure_ascii=False, indent=4)
-
-        print(f"✅ 成功將數據轉換並寫入到 {json_filepath}")
-        print(f"總共處理了 {processed_rows} 條有效的校系數據。")
-
-    except FileNotFoundError:
-        print(f"錯誤：找不到檔案 {csv_filepath}。請確認檔案路徑是否正確。")
+def extract_table_data(html_filepath: str, json_filepath: str):
+    """主函數：提取 HTML 表格中的科系數據。"""
+    try:
+        with open(html_filepath, 'r', encoding='utf-8') as f:
+            html_content = f.read()
     except Exception as e:
-        print(f"發生未知錯誤: {e}")
+        print(f"讀取檔案發生錯誤: {e}")
+        return
 
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    # 1. 提取學校名稱
+    university_name = extract_university_name(soup)
+    print(f"解析到的學校名稱：{university_name}")
+    
+    # 2. 找到主表格
+    table = soup.find('table')
+    if not table:
+        print("錯誤：未找到表格。")
+        return
+
+    # 最終輸出的數據結構
+    output_data = {university_name: {}}
+    
+    rows = table.find('tbody').find_all('tr')
+    data_rows = rows[1:] # 跳過標題行
+    
+    current_dept_info: Dict[str, Any] = {} # 用於儲存 rowspan 資訊
+
+    # 3. 遍歷數據行
+    for i, row in enumerate(data_rows):
+        
+        cells = row.find_all(['td', 'th'])
+        
+        # 檢查是否為新科系的起點 (即第一個 cell 有 rowspan 屬性)
+        # 這裡檢查 cells[0] 是否有 rowspan 屬性，或是否為第一行（i=0）
+        is_new_department = i == 0 or 'rowspan' in cells[0].attrs
+        
+        # 科目倍數及加權（位於第 7 個 td，索引 6）
+        # 我們將科目倍數儲存格的索引設為固定的
+        MULTIPLIER_CELL_INDEX_START = 6
+        
+        if is_new_department:
+            # --- 處理新科系 ---
+            
+            # 科系名稱在 cells[0]
+            dept_cell = cells[0]
+            dept_name = dept_cell.get_text(separator=' ', strip=True).strip()
+            
+            if not dept_name:
+                continue
+
+            rowspan_val = int(dept_cell.get('rowspan', 1))
+            
+            # 學測檢定標準在 cells[5]
+            criteria_cell = cells[5]
+            
+            # 提取並解析學測檢定標準
+            criteria_html = str(criteria_cell.contents)
+            parsed_criteria = parse_criteria(criteria_html)
+            
+            # 初始化科系數據
+            current_dept_info = {
+                "學測參採": parsed_criteria,
+                "科目倍數": {},
+                "__dept_name__": dept_name,
+                "__rowspan__": rowspan_val # 追蹤剩下的行數
+            }
+            
+            # 將新的科系數據加入輸出
+            output_data[university_name][dept_name] = current_dept_info
+            
+            # 科目倍數及加權 cell (索引 6)
+            multiplier_cell = cells[MULTIPLIER_CELL_INDEX_START]
+            
+        elif current_dept_info and current_dept_info.get("__rowspan__", 0) > 0:
+            # --- 處理連續的科目倍數行 ---
+            
+            # 科目倍數及加權 cell 在非起始行中通常是索引 0
+            multiplier_cell = cells[0]
+            
+        else:
+             # 追蹤失敗或無效行
+             continue
+        
+        # --- 解析科目倍數及加權 ---
+        multiplier_text = multiplier_cell.get_text(strip=True)
+        
+        # 如果內容是 '--' 則跳過
+        if multiplier_text.replace('-', '').strip() == '':
+            pass
+        else:
+            parsed_multipliers = parse_multiplier(multiplier_text)
+            current_dept_info["科目倍數"].update(parsed_multipliers)
+
+        # 追蹤 rowspan
+        if '__rowspan__' in current_dept_info:
+            current_dept_info["__rowspan__"] -= 1
+
+        # 如果 rowspan 結束，重置 current_dept_info
+        if current_dept_info.get("__rowspan__", 0) <= 0:
+            del current_dept_info["__rowspan__"]
+            del current_dept_info["__dept_name__"]
+            current_dept_info = {}
+
+    # 清理所有追蹤用的臨時鍵
+    for dept_data in output_data[university_name].values():
+        dept_data.pop('__rowspan__', None)
+        dept_data.pop('__dept_name__', None)
+
+    # 寫入 JSON 檔案
+    try:
+        with open(json_filepath, 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, ensure_ascii=False, indent=4)
+        print(f"✅ 成功提取數據並儲存到 {json_filepath}")
+    except Exception as e:
+        print(f"寫入 JSON 檔案發生錯誤: {e}")
 
 # =======================================================
 # 執行腳本
 # =======================================================
-
-INPUT_CSV = '112_result_school_data.csv' # 改檔名的地方
-OUTPUT_JSON = 'division_exam_data.json'
-
-convert_division_exam_data(INPUT_CSV, OUTPUT_JSON)
+if __name__ == "__main__":
+    # 注意：請將您完整的 HTML 內容保存為 'input_table.html'
+    extract_table_data(HTML_FILE, OUTPUT_JSON_FILE)

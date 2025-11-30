@@ -1,5 +1,6 @@
 // 變數宣告
 let schoolData = {};
+let new_standards = {};
 const universitySelect = document.getElementById('university-select');
 const departmentSelect = document.getElementById('department-select');
 const resultsDiv = document.querySelector('.results');
@@ -11,11 +12,17 @@ const resultsDiv = document.querySelector('.results');
 async function loadData() {
     try {
         // 載入 data.json 檔案
-        const response = await fetch('historical_results.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        const response1 = await fetch('historical_results.json');
+        if (!response1.ok) {
+            throw new Error(`HTTP error! status: ${response1.status}`);
         }
-        schoolData = await response.json();
+        schoolData = await response1.json();
+
+        let response2 = await fetch('all_department_criteria.json');
+        if (!response2.ok) {
+            throw new Error(`HTTP error! status: ${response2.status}`);
+        }
+        new_standards = await response2.json();
         
         // 初始化大學選單
         populateUniversities();
@@ -51,7 +58,7 @@ function populateUniversities() {
 function populateDepartments(selectedUniversity) {
     departmentSelect.innerHTML = '<option value="">-- 請選擇科系 --</option>'; // 清空並添加預設選項
     departmentSelect.disabled = true;
-    resultsDiv.innerHTML = `<p class="initial-prompt">請選擇 **科系** 以查詢資料。</p>`;
+    resultsDiv.innerHTML = `<p class="initial-prompt">請選擇校系以查詢資料。</p>`;
 
     if (selectedUniversity && schoolData[selectedUniversity]) {
         const departments = Object.keys(schoolData[selectedUniversity]);
@@ -79,11 +86,6 @@ function displayResults() {
     const uni = universitySelect.value;
     const dept = departmentSelect.value;
 
-    if (!uni || !dept) {
-        resultsDiv.innerHTML = `<p class="initial-prompt">請在上方選擇 **學校** 與 **科系** 以查詢資料。</p>`;
-        return; 
-    }
-
     const data = schoolData[uni][dept];
     let html = `<h2>${uni} - ${dept}</h2>`;
 
@@ -92,6 +94,45 @@ function displayResults() {
         resultsDiv.innerHTML = html;
         return;
     }
+
+
+    const GSAT_stnd = new_standards[uni][dept]["學測標準"] || {};
+    const AST_multiply = new_standards[uni][dept]["科目倍數"] || {};
+    
+    const GSAT_entries = Object.entries(GSAT_stnd);
+    
+    let criteriaHtml = '';
+
+    if (GSAT_entries.length > 0) {
+        GSAT_entries.forEach(([subject, standard]) => {
+            criteriaHtml += `<span class="data-tag">${subject} <b>${standard}</b></span>`;
+        });
+    }
+
+    let multiplierHtml = '';
+    const AST_entries = Object.entries(AST_multiply);
+    
+    if (AST_entries.length > 0) {
+        AST_entries.forEach(([subject, multiplier]) => {
+            const formattedMultiplier = (parseFloat(multiplier) || 0).toFixed(2);
+            multiplierHtml += `<span class="data-tag multiplier-tag">${subject} <b>${formattedMultiplier}</b></span>`;
+        });
+    }
+
+    if (!uni || !dept) {
+        resultsDiv.innerHTML = `<p class="initial-prompt">請選擇校系以查詢資料。</p>`;
+        return; 
+    }
+
+    html += `
+        <div class="current-criteria-box">
+            <h4>115 學年度 篩選標準</h4>
+            <div class="criteria-row-display">
+                <p>${criteriaHtml}</p>
+                <p>${multiplierHtml}</p>
+            </div>
+        </div>
+    `
 
     const years = Object.keys(data)
                         .sort((a, b) => parseInt(b) - parseInt(a))

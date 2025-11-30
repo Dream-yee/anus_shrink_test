@@ -1,7 +1,7 @@
 
 
-https://www.zamzar.com/convert/pdf-to-csv/
-採計科目所有組合成績人數累計表 https://www2.uac.edu.tw/uac114_note/
+https://www.ilovepdf.com/pdf_to_excel 用這個轉，超強
+科目倍數所有組合成績人數累計表 https://www2.uac.edu.tw/uac114_note/
 校系最低錄取分數統計 https://www.uac.edu.tw/114data/114_result_school_data.pdf
 
 跑這些檔案檔名記得改
@@ -15,3 +15,4 @@ https://www.zamzar.com/convert/pdf-to-csv/
 3. 然後跑 match_groups.py
 
 4. 跑 update_history_data.py
+
