@@ -156,7 +156,7 @@ def convert_division_exam_data(csv_filepath, json_filepath):
 # 執行腳本
 # =======================================================
 
-INPUT_CSV = '112_result_school_data.csv' # 改檔名的地方
+INPUT_CSV = '114_04.csv' # 改檔名的地方
 OUTPUT_JSON = 'division_exam_data.json'
 
 convert_division_exam_data(INPUT_CSV, OUTPUT_JSON)

@@ -67,7 +67,7 @@ def get_percentile_from_score(
     ceil_score = math.ceil(raw_total_score)
     
     # 將分數轉換為字串鍵 (e.g., 258.0 -> "258")
-    score_key = str(int(ceil_score))
+    score_key = str(int(ceil_score)+1) 
     
     # 4. 查找數據
     group_data = score_data.get(group_id)
@@ -78,7 +78,7 @@ def get_percentile_from_score(
     
     # 5. 返回百分比
     # 這裡的百分比 p 表示 >= score_key 的考生所佔的比例
-    return percentiles.get(score_key)
+    return percentiles.get(score_key, 0)
 
 
 # --- 函數定義：處理和匹配數據 ---

@@ -127,7 +127,7 @@ def convert_score_distribution(csv_filepath, json_filepath):
 # 執行腳本
 # =======================================================
 
-INPUT_CSV = '112_accu.csv' # 改檔名的地方
+INPUT_CSV = '114_score_distribution.csv' # 改檔名的地方
 OUTPUT_JSON = 'score_distribution.json'
 
 convert_score_distribution(INPUT_CSV, OUTPUT_JSON)
