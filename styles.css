@@ -38,6 +38,7 @@ body {
 /* 1. 校系選單 (Select) */
 /* ======================================================= */
 .selector-group {
+    width: 100%;
     display: flex;
     gap: 20px;
     margin-bottom: 40px; /* 增加底部留白 */
