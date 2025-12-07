@@ -12,13 +12,13 @@ const resultsDiv = document.querySelector('.results');
 async function loadData() {
     try {
         // 載入 data.json 檔案
-        const response1 = await fetch('historical_results.json');
+        const response1 = await fetch('datas/historical_results.json');
         if (!response1.ok) {
             throw new Error(`HTTP error! status: ${response1.status}`);
         }
         schoolData = await response1.json();
 
-        let response2 = await fetch('all_department_criteria.json');
+        let response2 = await fetch('datas/all_department_criteria.json');
         if (!response2.ok) {
             throw new Error(`HTTP error! status: ${response2.status}`);
         }
