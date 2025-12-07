@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 # 歷史數據檔案名 (如果不存在，會自動創建)
 HISTORICAL_FILE = 'historical_results.json'
 # 當前年度的數據檔案名
-NEW_DATA_FILE = 'very_result_112.json' # 記得改 記得改 記得改 拜託你了
+NEW_DATA_FILE = 'result.json' # 記得改 記得改 記得改 拜託你了
 # 確保保留的資料年份數量 (例如：保留 114, 113, 112 三個年份)
 YEARS_TO_KEEP = 3 
 # 當前要新增的年份 (請手動修改此處，例如今年是 114)
@@ -133,6 +133,52 @@ def update_and_clean_historical_data():
 
     # 4. 儲存更新後的歷史數據
     save_json(historical_data, HISTORICAL_FILE)
+
+def get_years_data(begin_year: int, end_year: int):
+    """
+    Args:
+        begin_year (int): 最舊的年份。
+        end_year (int): 最新的年份。
+    """
+    
+    historical_data = {}   
+
+    for i in range(begin_year, end_year+1): 
+
+        new_data = load_json(f"datas/{i}/result.json")
+        
+        if not new_data:
+            print(f"未能載入 {i}年 數據。")
+            continue
+        
+        for university, departments in new_data.items():
+            if university not in historical_data:
+                historical_data[university] = {}
+                
+            for department, dept_data in departments.items():
+                
+                # 初始化科系的歷史記錄
+                if department not in historical_data[university]:
+                    # 複製新的數據，因為我們不希望原始數據被修改
+                    historical_data[university][department] = {}
+                
+                # 確保 "科目倍數" 和 "錄取人數" 等基本欄位存在於科系層級 (如果需要)
+                # 這裡我們只將年度數據存入年份字典
+                
+                # 將當前年份的數據存入科系字典中
+                # 避免覆蓋，先準備好要存的年度數據
+                
+                # 刪除新數據中的科目倍數和錄取人數，因為這些應該是相對靜態的，
+                # 且您上一步的 JSON 格式中，這些欄位是科系層級的屬性。
+                # 但如果您要保留原始 very_result_114.json 的所有內容，則保留。
+                # 為了簡單起見，我們保留所有內容，但將其存入年份字典。
+                
+                # 備份一份當前科系的數據，以便存入年份鍵中
+                annual_data_to_store = dept_data.copy()
+                
+                historical_data[university][department][str(i)] = annual_data_to_store
+                
+    return historical_data
 
 
 # =======================================================

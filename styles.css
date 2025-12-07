@@ -1,452 +1,250 @@
-/* --- Global Styles & Typography --- */
+/* ======================================================= */
+/* 0. 基礎設定與字體 (Modern Refined) */
+/* ======================================================= */
 body {
-    font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* 更換背景漸變為柔和的橘色系 */
-    background: linear-gradient(to right bottom, #fff7ed, #fffaf4);
-    color: #333;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; /* 假設使用 Inter 或系統無襯線字體 */
+    background-color: #FAFAFA; /* 柔和極淺米白 */
+    color: #333333; /* 柔和深灰 */
     line-height: 1.6;
-    padding: 30px;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+    padding: 20px;
 }
 
 .container {
-    max-width: 960px;
-    width: 100%;
+    max-width: 1000px;
     margin: 0 auto;
     background: #ffffff;
-    padding: 40px 50px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-    animation: fadeIn 0.8s ease-out;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); /* 更弱的陰影 */
+    padding: 40px 60px;
+    border-radius: 12px; /* 柔和圓角 */
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- Header --- */
-.header h1 {
-    text-align: center;
-    color: #ff8c00; /* 主橘色 */
-    margin-bottom: 35px;
-    padding-bottom: 15px;
-    border-bottom: 3px solid #ffe0b2; /* 淺橘色分隔線 */
-    font-size: 2.5em;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    position: relative;
-}
-
-.header h1::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -3px;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: #ff8c00; /* 主橘色強調線 */
-    border-radius: 2px;
-}
-
-/* --- Controls Section --- */
-.controls {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    margin-bottom: 40px;
-    padding: 25px 30px;
-    background: #fff8f0; /* 淺橘色背景 */
-    border-radius: 12px;
-    gap: 30px;
-    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.05);
-}
-
-.select-group {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    min-width: 250px;
-}
-
-.select-group label {
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #555;
-    font-size: 1.1em;
-}
-
-.select-group select {
-    padding: 12px 18px;
-    border: 1px solid #ffcc80; /* 橘色邊框 */
-    border-radius: 8px;
-    font-size: 1.05em;
-    background-color: #fff;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    /* 更換 SVG 箭頭顏色為橘色 */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff8c00%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20227.3%2018.6%2075.1c-6.6-6.6-17.6-6.6-24.3%200-6.6%206.6-6.6%2017.6%200%2024.3l133%20133c6.6%206.6%2017.6%206.6%2024.3%200l133-133c6.3-6.6%206.3-17.6-.3-24.3z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 12px;
-    transition: all 0.3s ease;
-}
-
-.select-group select:hover {
-    border-color: #ffb74d; /* 較淺的橘色邊框 */
-    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.1); /* 橘色陰影 */
-}
-
-.select-group select:focus {
-    border-color: #ff8c00; /* 主橘色 */
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.25); /* 橘色聚焦陰影 */
-}
-
-.select-group select:disabled {
-    background-color: #e9ecef;
-    cursor: not-allowed;
-    color: #6c757d;
-}
-
-/* --- Results Section --- */
-.results {
-    padding-top: 30px;
-    border-top: 1px dashed #ffe0b2; /* 淺橘色虛線 */
-}
-
-.results h2 {
-    color: #343a40;
-    margin-bottom: 30px;
-    font-size: 2em;
-    font-weight: 600;
-    text-align: center;
-    position: relative;
-    padding-bottom: 10px;
-}
-
-.results h2::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 2px;
-    background-color: #ff8c00; /* 主橘色強調線 */
-    border-radius: 1px;
-}
-
-.data-entry {
-    background: #fdfdfd;
-    border: 1px solid #ffeccf; /* 淺橘色邊框 */
-    border-radius: 10px;
-    padding: 20px 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.data-entry:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.year-title {
-    color: #ff8c00; /* 主橘色 */
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.25em;
-    font-weight: 700;
-    border-left: 4px solid #ff8c00; /* 主橘色強調線 */
-    padding-left: 10px;
-}
-
-
-/* ====== 核心修改: 讓左右內容平行排列 ====== */
-
-/* 讓左右內容並排 */
-.entry-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: nowrap; /* 盡量不換行 */
-}
-
-/* 左側：科目篩選標準 (佔 65%) */
-.criteria-text {
-    /* width: 100%; 給予左側更多空間 */
-    margin: 0;
-    font-size: 1.05em;
-    color: #555;
-    /* 確保內部的科目標籤緊密排列 */
-    display: flex; 
-    flex-wrap: wrap;
-    align-items: center;
-    padding-right: 15px; /* 增加與右側的間隔 */
-}
-
-/* 右側：錄取標準和達標比例 (佔 35%) */
-.standard-details {
-    display: flex;
-    /* width: 200%; 給予右側所需的空間 */
-    gap: 15px; 
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: flex-end; /* 將內容推向右側 */
-    padding-left: 10px; 
-}
-
-/* 確保裡面的 span 標籤能換行時保持間距 */
-.criteria-text span:not(.separator) {
-    background-color: #fff3e0; /* 淺橘色背景 */
-    padding: 4px 8px;
-    border-radius: 5px;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    white-space: nowrap;
-    font-weight: 500;
-    color: #e65100; /* 深橘色文字 */
-}
-
-/* 移除不再需要的 .separator 樣式 */
-.separator {
-    display: none;
-}
-
-/* 錄取標準的樣式調整：替換為深藍灰色 */
-.standard {
-    font-weight: 700;
-    color: #495057; /* 深藍灰色文字 (Neutral/Professional) */
-    font-size: 1.0em;
-    background-color: #e9ecef; /* 淺灰色背景 */
-    padding: 5px 10px;
-    border-radius: 5px;
-    white-space: nowrap;
-}
-
-/* --- Prompts & Messages --- */
-.initial-prompt, .no-data, .error-message {
-    text-align: center;
-    padding: 50px;
-    font-size: 1.3em;
-    color: #707070;
-    background-color: #fffaf0; /* 淺橘色背景 */
-    border-radius: 10px;
-    border: 1px solid #ffe0b2; /* 淺橘色邊框 */
-    margin-top: 30px;
-    animation: slideIn 0.5s ease-out;
-}
-/* --- Fancy and Orange Themed Styles for the Current Criteria Box --- */
-
-/* 1. 容器樣式：窄化內邊距 (上下寬度) 和柔和橘色背景 */
-.current-criteria-box {
-    /* 窄化上下 padding: 從 25px 調整為 15px */
-    padding: 15px 25px; 
-    
-    background-color: #fffaf0; /* 淺橘色/奶油色 */
-    border: 2px solid #ff7f50; /* 深橘色邊框 */
-    box-shadow: 0 6px 15px rgba(255, 140, 0, 0.25);
-    border-radius: 12px;
-    margin-bottom: 30px;
-}
-
-/* 2. 獨立頂部標題：115年 篩選標準 */
-.current-criteria-box .box-title {
-    color: #963e00; /* 較深的橘棕色 */
-    font-size: 24px;
-    font-weight: 800;
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-/* 3. 科系標題和子標題樣式 */
-.current-criteria-box h2 {
-    color: #333;
-    font-size: 26px;
-    font-weight: 800;
-    margin-top: 0;
+/* 頂部標題 */
+.container h1 {
+    font-weight: 400; /* 輕字重 */
+    font-size: 36px;
     margin-bottom: 5px;
 }
 
-.current-criteria-box h4 {
-    color: #ff8c00; /* OrangeRed */
+.container p.description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* ======================================================= */
+/* 1. 校系選單 (Select) */
+/* ======================================================= */
+.selector-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px; /* 增加底部留白 */
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd; /* 增加底部線條，將選單區塊獨立出來 */
+}
+
+.selector-group select {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid;
+    border-color: #ddd; /* 柔和鼠尾草綠 */
+    border-radius: 4px;
+    font-size: 16px;
+    appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.5s;
+}
+
+.selector-group select:hover {
+    border-color: #55A692; /* 柔和鼠尾草綠 */
+    transition: border-color 0.5s;
+}
+
+.selector-group select:focus {
+    border-color: #55A692; /* 柔和鼠尾草綠 */
+    outline: none;
+}
+
+/* ======================================================= */
+/* 2. 結果顯示區塊 (.results) */
+/* ======================================================= */
+
+/* 選中科系的頂部標題 */
+.results h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333333;
+    border-bottom: 3px solid #55A692; /* 柔和鼠尾草綠粗線強調 */
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+}
+
+/* ======================================================= */
+/* 3. 最新標準 (115年) 區塊樣式 (突出顯示) */
+/* ======================================================= */
+
+.current-criteria-box {
+    padding: 0 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    background-color: #f7fcfb; /* 極淺淡綠色背景，柔和突出 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #d4e0dd; /* 淺綠邊框 */
+}
+
+.current-criteria-box .box-title {
+    color: #55A692; /* 柔和鼠尾草綠 */
+    font-size: 24px;
+    font-weight: 600;
+    /* margin-bottom: 25px; */
+}
+
+.criteria-row-display {
+    /* margin-bottom: 5px; */
+}
+
+h5 {
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    /* margin-bottom: 10px; */
+    border-left: 3px solid #55A692; /* 左側柔和綠色小標記 */
+    padding-left: 8px;
+}
+
+/* --- 數據標籤基礎樣式 --- */
+.data-tag {
+    display: inline-block;
+    /* padding: 5px 0; */
+    margin-right: 0; /* 🌟 必須移除，避免與 .data-separator 的 margin 重疊 */
+    /* margin-bottom: 8px;  */
+    font-size: 15px;
+    color: #333333; 
+}
+
+/* --- 數值 (Multiplier Value) 強調樣式 --- */
+.data-tag b {
+    color: #77BFA2; /* 🌟 Secondary Soft Teal/Mint Green for emphasis */
+    font-weight: 700;
+    font-size: 16px;
+    border-bottom: none; /* No underline/dot for a cleaner look */
+}
+
+/* --- 數據分隔符樣式 (適用於 .join() 插入的分隔符) --- */
+.data-separator {
+    color: #cccccc; /* 極淺灰色，柔和分隔線 */
+    font-size: 1em; /* 與周圍文字大小相同 */
+    font-weight: 300; /* 輕字重，降低存在感 */
+    margin: 0 8px;   /* 🌟 核心間距：左右各 8px 創造呼吸空間 */
+    display: inline-block; /* 確保 margin 屬性可以正確應用 */
+    /* 移除 data-tag 上的 margin-right 避免過大的間隔 */
+}
+
+/* ======================================================= */
+/* 4. 歷史數據區塊 (卡片式 Modern Card Design) */
+/* ======================================================= */
+
+/* 歷史數據區塊總標題 */
+.results > h3 {
+    color: #333; 
+    font-size: 22px;
+    font-weight: 500; 
+    margin-top: 40px;
+    margin-bottom: 30px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* 單一歷史年份數據區塊容器 (卡片) */
+.historical-entry-box {
+    background-color: #ffffff; /* 卡片背景 */
+    padding: 20px;
+    border-radius: 8px; /* 柔和圓角 */
+    margin-bottom: 25px;
+    border: 1px solid #e5e5e5; /* 柔和邊框 */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* 輕微抬升感 */
+    transition: transform 0.2s;
+}
+
+.historical-entry-box:hover {
+    transform: translateY(-3px); /* 懸停微抬升效果 */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 歷史年份與舊系名標題 */
+.history-year-title {
+    color: #333;
+    font-size: 18px;
     font-weight: 700;
     margin-top: 0;
     margin-bottom: 15px;
-    border-bottom: 2px solid #ffaa5a; /* 稍微收窄分隔線寬度 */
+    border-left: 5px solid #77BFA2; /* 淺綠色強調條 */
+    padding-left: 10px;
     padding-bottom: 5px;
-    font-size: 18px;
-    text-transform: uppercase;
-}
-/* 4. 數據行樣式 (調整垂直間距) */
-.criteria-row-display {
-    /* 減少區塊之間的下外邊距：從 15px 調整到 10px */
-    margin-bottom: 10px; 
-    
-    /* 減少區塊內部的上下內邊距：從 8px 調整到 5px */
-    padding: 5px 10px;
-    
-    border-left: 5px solid #ff8c00; 
-    border-radius: 4px;
+    border-bottom: 1px dotted #ccc; 
 }
 
-.criteria-row-display h5 {
-    /* 減少標題下外邊距：從 5px 調整到 3px，使其更靠近內容 */
-    margin-bottom: 3px; 
-    
-    color: #4b4b4b;
-    font-size: 15px;
-    font-weight: 600;
-    margin-top: 3px; /* 增加一點點上邊距，但整體仍然很窄 */
+/* 詳細數據標籤 (錄取人數, 分數, 比例) */
+.history-row-details {
+    /* margin-top: 15px; */
+    /* padding-top: 10px; */
+    display: flex; /* Flexbox 排列更現代 */
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-/* 5. 數據標籤樣式 (微調標籤大小，使其更貼合內容) */
-.data-tag {
-    display: inline-block;
-    background-color: #ffffff;
-    border: 1px solid #dcdcdc;
-    /* 減少標籤上下內邊距：從 5px 調整到 3px */
-    padding: 3px 10px; 
-    margin-right: 8px;
-    /* 減少標籤下外邊距：從 5px 調整到 4px */
-    margin-bottom: 4px; 
-    border-radius: 6px;
+.detail-tag {
+    background-color: #f0f3f5; /* 略帶灰藍的淺背景 */
+    color: #555;
+    padding: 8px 15px;
+    border-radius: 20px; /* 圓形標籤 */
     font-size: 14px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
 }
 
-/* 🌟 柔和強調色 🌟 */
-.data-tag b {
-    /* 均標/前標/A級：使用柔和的藍灰色，看起來舒服、不刺眼 */
-    color: #f87400; /* Bootstrap Primary Blue 是一個舒服的選擇 */
+.detail-tag b {
+    color: #55A692; /* 柔和鼠尾草綠強調 */
     font-weight: 700;
 }
 
-.data-tag.multiplier-tag b {
-    /* 倍率：使用柔和的灰綠色 */
-    color: #f87400; /* Bootstrap Success Green 也是一個舒服的選擇 */
-    font-weight: 700;
-}
+/* ======================================================= */
+/* 5. 靜態備註區塊 (系統備註與說明) */
+/* ======================================================= */
 
-/* --- 靜態系統備註區塊樣式 --- */
 #system-notes-container {
-    /* margin-top: 40px; 增加與上方內容的間距 */
-    /* margin-bottom: 20px; */
-    padding: 10px 0;
+    /* margin-top: 60px; */
+    /* padding-top: 30px; */
+    border-top: 1px solid #e0e0e0;
 }
 
 #system-notes-container h3 {
-    color: #a0522d; /* 柔和的棕橘色 (Sienna) */
-    font-size: 20px;
-    font-weight: 700;
+    color: #444;
+    font-size: 18px;
+    font-weight: 600;
     margin-bottom: 15px;
-    padding-bottom: 5px;
-    border-bottom: 2px solid #deb887; /* 淺色分隔線 */
 }
 
 .static-notes-box {
-    /* 使用一個非常淺的背景色，作為背景補充信息 */
-    background-color: #fcf8e3; /* 淺黃色/淺米色，提示資訊區塊 */
-    border: 1px solid #faebcc; /* 柔和邊框 */
-    padding: 15px;
+    background-color: #f5f5f5; /* 淺灰色塊，視覺上與數據區塊分離 */
+    border: none;
+    padding: 20px;
     border-radius: 8px;
     font-size: 14px;
-    line-height: 1.6;
-    color: #555;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* 輕微陰影 */
+    color: #777;
 }
 
 .static-notes-box p {
-    margin: 5px 0;
+    margin-bottom: 5px;
 }
 
 .static-notes-box strong {
-    color: #cc5500; /* 使用深橘色強調關鍵詞 */
+    color: #55A692; 
 }
 
-a {
-    color: #7f7f7f;
-    text-decoration: none;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.error-message {
-    color: #b71c1c; /* 與錄取標準相同的紅色 */
-    background-color: #ffcdd2; /* 與錄取標準相同的淺紅色背景 */
-    border: 1px solid #ef9a9a;
-}
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 900px) {
-    .container {
-        padding: 25px 30px;
-    }
-    .header h1 {
-        font-size: 2em;
-    }
-    .controls {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 20px;
-    }
-    .select-group {
-        width: 100%;
-        min-width: unset;
-    }
-    .results h2 {
-        font-size: 1.6em;
-    }
-    .data-entry {
-        padding: 15px 20px;
-    }
-    
-    /* 小螢幕上讓左右兩側堆疊，確保可讀性 */
-    .entry-content {
-        flex-direction: column; 
-    }
-
-    .criteria-text {
-        width: 100%; 
-        padding-right: 0;
-        margin-bottom: 15px; /* 增加與下方標準的間距 */
-    }
-    
-    .standard-details {
-        width: 100%;
-        padding-left: 0;
-        justify-content: flex-start; /* 標準從左側開始排列 */
-    }
-}
-
-@media (max-width: 900px) {
-    body {
-        padding: 15px;
-    }
-    .container {
-        padding: 20px 25px;
-    }
-    .header h1 {
-        font-size: 1.8em;
-    }
-    .results h2 {
-        font-size: 1.4em;
-    }
-    .initial-prompt, .no-data, .error-message {
-        padding: 30px;
-        font-size: 1.1em;
-    }
+.static-notes-box a {
+    color: #7f9590; 
 }

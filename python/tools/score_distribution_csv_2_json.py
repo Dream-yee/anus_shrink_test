@@ -3,7 +3,7 @@ import json
 from collections import defaultdict
 import re
 
-def convert_score_distribution(csv_filepath, json_filepath):
+def convert_score_distribution(csv_filepath):
     """
     讀取分科測驗分數分布 CSV，將其轉換為按組別分組的 JSON 格式。
 
@@ -110,12 +110,10 @@ def convert_score_distribution(csv_filepath, json_filepath):
         # 將 defaultdict 轉為標準 dict
         final_output = dict(output_data)
 
-        with open(json_filepath, 'w', encoding='utf-8') as jsonfile:
-            # 設置 ensure_ascii=False 以正確顯示中文，並使用 indent=4 格式化輸出
-            json.dump(final_output, jsonfile, ensure_ascii=False, indent=4, sort_keys=True) 
-
-        print(f"✅ 成功將分數分布數據轉換並寫入到 {json_filepath}")
+        print(f"✅ 成功將分數分布數據從score_dis三小的_json.py轉換")
         print(f"總共處理了 {processed_rows} 條數據行，產生了 {len(final_output)} 個組別的數據。")
+
+        return final_output
 
     except FileNotFoundError:
         print(f"錯誤：找不到檔案 {csv_filepath}。請確認檔案路徑是否正確。")
@@ -127,7 +125,7 @@ def convert_score_distribution(csv_filepath, json_filepath):
 # 執行腳本
 # =======================================================
 
-INPUT_CSV = '114_score_distribution.csv' # 改檔名的地方
-OUTPUT_JSON = 'score_distribution.json'
+# INPUT_CSV = '114_score_distribution.csv' # 改檔名的地方
+# OUTPUT_JSON = 'score_distribution.json'
 
-convert_score_distribution(INPUT_CSV, OUTPUT_JSON)
+# convert_score_distribution(INPUT_CSV, OUTPUT_JSON)

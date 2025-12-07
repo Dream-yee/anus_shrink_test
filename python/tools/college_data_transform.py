@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 from typing import Dict, Any
 
-def convert_division_exam_data(csv_filepath, json_filepath):
+def convert_division_exam_data(csv_filepath):
     """
     讀取分科測驗 CSV 數據，將其轉換為按學校分組的 JSON 格式。
     在轉換過程中，將錄取標準由加權總分轉換為加權平均分數。
@@ -140,11 +140,9 @@ def convert_division_exam_data(csv_filepath, json_filepath):
         # --- 6. 輸出 JSON 檔案 ---
         final_output = dict(output_data)
 
-        with open(json_filepath, 'w', encoding='utf-8') as jsonfile:
-            json.dump(final_output, jsonfile, ensure_ascii=False, indent=4)
-
-        print(f"✅ 成功將數據轉換並寫入到 {json_filepath}")
+        print(f"✅ 成功將數據轉換並從college_data_transfrom轉出")
         print(f"總共處理了 {processed_rows} 條有效的校系數據。")
+        return final_output
 
     except FileNotFoundError:
         print(f"錯誤：找不到檔案 {csv_filepath}。請確認檔案路徑是否正確。")
@@ -156,7 +154,7 @@ def convert_division_exam_data(csv_filepath, json_filepath):
 # 執行腳本
 # =======================================================
 
-INPUT_CSV = '114_04.csv' # 改檔名的地方
-OUTPUT_JSON = 'division_exam_data.json'
+# INPUT_CSV = '114_04.csv' # 改檔名的地方
+# OUTPUT_JSON = 'division_exam_data.json'
 
-convert_division_exam_data(INPUT_CSV, OUTPUT_JSON)
+# convert_division_exam_data(INPUT_CSV, OUTPUT_JSON)

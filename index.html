@@ -12,27 +12,18 @@
             <h1>分科測驗校系標準及分數</h1>
         </header>
 
-        <div class="controls">
-            <div class="select-group">
-                <label for="university-select">選擇學校:</label>
-                <select id="university-select"></select>
-            </div>
-            
-            <div class="select-group">
-                <label for="department-select">選擇科系:</label>
-                <select id="department-select" disabled></select>
-            </div>
+        <div class="selector-group">
+            <select id="university-select"></select>
+            <select id="department-select"></select>
         </div>
 
-        <div class="results">
-            <p class="initial-prompt">請在上方選擇 學校 與 科系 以查詢資料。</p>
-        </div>
-
+    <div id="results-display" class="results"></div>
         <div id="system-notes-container">
+            <h3>ⓘ 資料與規則注意事項</h3>
             <div class="static-notes-box">
-                <p><strong>資料來源 <span style="font-weight: 900;">▸</span> </strong><a href="https://www.uac.edu.tw">大學考試入學分發委員會</a></p>
-                <p><strong>學測數學 <span style="font-weight: 900;">▸</span> </strong>當數A及數B兩個標準同時出現時代表其中一個達標即可</p>
-                <p><strong>達標佔比 <span style="font-weight: 900;">▸</span> </strong>估算的。找的是 [加權平均 x 科目數] 向上取整後，成績 ≧ 這個分數的人數累積百分比，實際達標的比例應該要比這個高一點</p>
+                <p>資料來源: <a href="https://www.uac.edu.tw" target="_blank">大學考試入學分發委員會</a></p>
+                <p>學測數學判讀: 當數A及數B兩個標準同時出現時，代表其中一個達標即可。</p>
+                <p>達標佔比說明: 此為估算值。計算方式為 [加權平均 x 科目數] 向上取整後，成績 ≧ 這個分數的人數累積百分比。實際達標的比例應該比這裡顯示的略高一些。</p>
             </div>
         </div>
     </div>

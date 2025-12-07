@@ -3,19 +3,7 @@
 https://www.ilovepdf.com/pdf_to_excel 用這個轉，超強
 科目倍數所有組合成績人數累計表 https://www2.uac.edu.tw/uac114_note/
 校系最低錄取分數統計 https://www.uac.edu.tw/114data/114_result_school_data.pdf
-
-跑這些檔案檔名記得改
-1. 把最低分數統計convert成csv
-   把原住民之後的全部砍掉
-   中間會有超大empty column記得拿掉
-   跑 college_data_transfrom.py
-
-2. 採計組合累計人數只留組合代碼, 科目組合, 分數區間, 高到低累積百分比, 跑 score_distribution_csv_2_json.py
-
-3. 然後跑 match_groups.py
-
-4. 跑 update_history_data.py
-
+校系更名 https://www.uac.edu.tw/115data/115dept_upd.pdf
 ----
 
 要取得新年度的資料
@@ -26,3 +14,31 @@ https://www.ilovepdf.com/pdf_to_excel 用這個轉，超強
 (不能直接進，要從考分會的校系分則那邊，下面有一個學測採計做篩選的部分按模糊篩選，這樣會取得全部校系)
 
 2. 用get_all_details.py得到今年的結果，就這樣，記得script.js的年次要改
+
+
+
+---- 2025.12.07 ----
+
+把最低分數統計convert成csv
+把原住民之後的全部砍掉
+中間會有超大empty column記得拿掉
+
+1. 把科目組合人數統計刪刪剪剪修好之後, 把csv檔丟到 /datas/民國年/subjects_combinations.csv (檔名一定要改成這樣)
+
+2. 校系錄取分數那坨也是丟到 /datas/民國年/dept_criteria.csv (檔名一定要改成這樣)
+
+3. 跑 python 即得到 very_result_民國年.json
+
+4. 把新一年的所有組合 (https://uac2.ncku.edu.tw/cross_search/index.php?c=search&m=result_basic) 
+用 command + S 把整個html載下來
+(不能直接進，要從考分會的校系分則那邊，下面有一個學測採計做篩選的部分按模糊篩選，這樣會取得全部校系)
+丟到 /datas/最新民國年/AST_school.html (檔名一定要改成這樣)
+
+5. 把最新一年的校系更名改成 CSV 丟到 /datas/最新民國年/dept_renamed.csv (檔名一定要改成這樣)
+
+6. 用 python 跑 /datas/最新民國年/AST_school.html 得到 department_eids.json 以及 all_department_criteria.json
+
+7. 用 python 跑 /datas/最新民國年/dept_renamed.csv 得到 dept_renamed.json
+
+7. 跑 python 把這幾年的結果合起來, 看要留幾年
+

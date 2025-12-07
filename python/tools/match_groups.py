@@ -133,14 +133,14 @@ def process_and_match_data(
     return updated_exam_data
 
 
-def main():
+def match_them(division_exam_data, score_distribution_data):
     try:
-        # 1. 載入數據
-        with open(DIVISION_EXAM_FILE, 'r', encoding='utf-8') as f:
-            division_exam_data = json.load(f)
+        # # 1. 載入數據
+        # with open(DIVISION_EXAM_FILE, 'r', encoding='utf-8') as f:
+        #     division_exam_data = json.load(f)
 
-        with open(SCORE_DISTRIBUTION_FILE, 'r', encoding='utf-8') as f:
-            score_distribution_data = json.load(f)
+        # with open(SCORE_DISTRIBUTION_FILE, 'r', encoding='utf-8') as f:
+        #     score_distribution_data = json.load(f)
 
         # 2. 創建科目組合到組別代號的映射表
         subject_group_map = create_subject_group_map(score_distribution_data)
@@ -148,11 +148,9 @@ def main():
         # 3. 處理並匹配分科測驗數據，計算達標比例
         updated_data = process_and_match_data(division_exam_data, subject_group_map, score_distribution_data)
 
-        # 4. 儲存更新後的數據
-        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            json.dump(updated_data, f, ensure_ascii=False, indent=4)
+        return updated_data
         
-        print(f"\n✨ 數據整合完成！結果已儲存到 {OUTPUT_FILE}")
+        print(f"\n✨ 數據整合完成！")
 
     except FileNotFoundError as e:
         print(f"錯誤: 找不到檔案。請確保兩個 JSON 檔案 ({DIVISION_EXAM_FILE} 和 {SCORE_DISTRIBUTION_FILE}) 都在當前目錄中。錯誤: {e}")
@@ -160,7 +158,3 @@ def main():
         print(f"錯誤: JSON 檔案解析失敗。請檢查檔案格式是否正確。錯誤: {e}")
     except Exception as e:
         print(f"發生未知錯誤: {e}")
-
-
-if __name__ == "__main__":
-    main()
