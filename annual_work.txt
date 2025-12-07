@@ -27,7 +27,7 @@ https://www.ilovepdf.com/pdf_to_excel 用這個轉，超強
 
 2. 校系錄取分數那坨也是丟到 /datas/民國年/dept_criteria.csv (檔名一定要改成這樣)
 
-3. 跑 python 即得到 very_result_民國年.json
+3. 跑 get_single_year_results.py 即得到 very_result_民國年.json
 
 4. 把新一年的所有組合 (https://uac2.ncku.edu.tw/cross_search/index.php?c=search&m=result_basic) 
 用 command + S 把整個html載下來
@@ -36,9 +36,8 @@ https://www.ilovepdf.com/pdf_to_excel 用這個轉，超強
 
 5. 把最新一年的校系更名改成 CSV 丟到 /datas/最新民國年/dept_renamed.csv (檔名一定要改成這樣)
 
-6. 用 python 跑 /datas/最新民國年/AST_school.html 得到 department_eids.json 以及 all_department_criteria.json
+6. 用 get_new_details.py 跑 /datas/最新民國年/AST_school.html 得到 department_eids.json 以及 all_department_criteria.json
 
-7. 用 python 跑 /datas/最新民國年/dept_renamed.csv 得到 dept_renamed.json
+7. 用 deparment_renaming.py 跑 /datas/最新民國年/dept_renamed.csv 得到 dept_renamed.json
 
-7. 跑 python 把這幾年的結果合起來, 看要留幾年
-
+7. 跑 data_integrator.py 把這幾年的結果合起來, 前面的constant valuable記得改, 這樣就可以了, 啾咪2026年八月的温力翰

@@ -3,7 +3,7 @@ import json
 from typing import Dict, List, Any
 
 # 檔案名稱
-YEAR = 113
+YEAR = 115
 INPUT_CSV_FILE = f'datas/{YEAR}/dept_renamed.csv'
 OUTPUT_JSON_FILE = f'datas/{YEAR}/dept_renamed.json'
 

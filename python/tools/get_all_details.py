@@ -9,23 +9,12 @@ EID_FILE = 'department_eids.json'
 ALL_DETAILS_FILE = 'all_department_criteria.json'
 POST_URL = 'https://uac2.ncku.edu.tw/cross_search/index.php?c=search&m=detail'
 
-def get_department_html_responses() -> List[Tuple[str, str, str, str]]:
+def get_department_html_responses(eids_data) -> List[Tuple[str, str, str, str]]:
     """
     遍歷所有 EID，發送 POST 請求，並返回包含所有 HTML 響應的列表。
     
     返回: [ (學校名稱, 科系名稱, EID, HTML內容), ... ]
     """
-    
-    try:
-        with open(EID_FILE, 'r', encoding='utf-8') as f:
-            eids_data = json.load(f)
-    except FileNotFoundError:
-        print(f"錯誤：找不到 EID 檔案 {EID_FILE}。請確保它存在且格式正確。")
-        return []
-    except json.JSONDecodeError:
-        print(f"錯誤：EID 檔案 {EID_FILE} 格式錯誤。")
-        return []
-
     # 展開 EID 列表，以 university/department 為單位
     eids_list = []
     for uni, depts in eids_data.items():
@@ -77,16 +66,11 @@ def get_department_html_responses() -> List[Tuple[str, str, str, str]]:
 
     print(f"\n✅ 完成所有 {total_eids} 個請求。")
 
-    try:
-        with open(ALL_DETAILS_FILE, 'w', encoding='utf-8') as f:
-            json.dump(result, f, ensure_ascii=False, indent=4)
-        print(f"✅ 成功提取數據並儲存到 {ALL_DETAILS_FILE}")
-    except Exception as e:
-        print(f"寫入 JSON 檔案發生錯誤: {e}")
+    return result
 
 # =======================================================
 # 執行腳本
 # =======================================================
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # 執行爬取
-    get_department_html_responses()
+    # get_department_html_responses()

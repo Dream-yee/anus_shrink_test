@@ -8,7 +8,7 @@ HTML_FILE = '115_AST_school.html'
 # 輸出 JSON 檔案名
 OUTPUT_JSON_FILE = 'department_eids.json'
 
-def extract_department_eids(html_filepath: str, json_filepath: str):
+def extract_department_eids(html_filepath: str):
     """
     從 HTML 檔案中提取所有校系名稱和對應的 data-eid，並保存為 JSON 格式。
     
@@ -81,18 +81,19 @@ def extract_department_eids(html_filepath: str, json_filepath: str):
     # 將 defaultdict 轉換為標準 dict
     final_output = dict(output_data)
 
+    return final_output
     # 寫入 JSON 檔案
-    try:
-        with open(json_filepath, 'w', encoding='utf-8') as f:
-            # 使用 ensure_ascii=False 確保中文正常顯示，並使用 indent=4 格式化
-            json.dump(final_output, f, ensure_ascii=False, indent=4)
-        print(f"✅ 成功提取 {processed_count} 個校系的 data-eid，並儲存到 {json_filepath}")
-    except Exception as e:
-        print(f"寫入 JSON 檔案發生錯誤: {e}")
+    # try:
+    #     with open(json_filepath, 'w', encoding='utf-8') as f:
+    #         # 使用 ensure_ascii=False 確保中文正常顯示，並使用 indent=4 格式化
+    #         json.dump(final_output, f, ensure_ascii=False, indent=4)
+    #     print(f"✅ 成功提取 {processed_count} 個校系的 data-eid，並儲存到 {json_filepath}")
+    # except Exception as e:
+    #     print(f"寫入 JSON 檔案發生錯誤: {e}")
 
 
 # =======================================================
 # 執行腳本
 # =======================================================
 if __name__ == "__main__":
-    extract_department_eids(HTML_FILE, OUTPUT_JSON_FILE)
+    extract_department_eids(HTML_FILE)
