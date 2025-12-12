@@ -49,7 +49,7 @@ def convert_division_exam_data(csv_filepath):
 
                 try:
                     university = cleaned_row[1]
-                    department = cleaned_row[2]
+                    department = cleaned_row[2].replace("\n", "").replace("\r", "")
                     criteria_str = cleaned_row[3]
                     admitted_count = int(cleaned_row[4])
                     

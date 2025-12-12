@@ -1,23 +1,19 @@
 import json
 import os
 from typing import Dict, List, Any, Optional
+import re
 
-# --- 設定常數 ---
+# --- 設定常數 (保持不變) ---
 DATA_DIR = 'datas'
 CURRENT_YEAR = 115
-TARGET_START_YEAR = 112 # 追溯到的最早年份 (例如：115, 114, 113, 112)
+TARGET_START_YEAR = 112 
 OUTPUT_FILE = 'datas/historical_result.json'
 
-# --- 數據檔案路徑 ---
-CURRENT_DATA_FILE = os.path.join(DATA_DIR, str(CURRENT_YEAR), 'all_department_criteria.json')
-# 歷年數據檔案格式: data/114/result.json
-# 歷年改名映射檔案格式: data/114/dept_renamed.json (此檔案定義了 114年的新系名 <- 113年的舊系名)
-
-
+# --- 輔助函數 (保持不變) ---
 def load_json_file(filepath: str) -> Dict:
     """載入 JSON 檔案，如果檔案不存在則返回空字典。"""
     if not os.path.exists(filepath):
-        print(f"警告：找不到檔案 {filepath}，視為無資料。")
+        # print(f"警告：找不到檔案 {filepath}，視為無資料。") # 關閉警告避免輸出過多
         return {}
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
@@ -25,202 +21,174 @@ def load_json_file(filepath: str) -> Dict:
     except json.JSONDecodeError:
         print(f"錯誤：檔案 {filepath} 格式錯誤。")
         return {}
+# -----------------------------
+
+def get_department_sort_key(dept_name: str) -> float:
+    """
+    為校系名稱生成一個排序權重，確保甲、乙、丙組等能按邏輯順序排列。
+    數字權重越低，排序越靠前。
+    """
+    # 預設權重為高，確保未包含關鍵字的排在後面（如果需要）
+    base_weight = 1000.0
+
+    # 1. 天干地支 (甲 < 乙 < 丙...)
+    # 這裡賦予數字權重，確保甲組 (1) 在乙組 (2) 之前
+    mapping = {
+        '甲': 1, '乙': 2, '丙': 3, '丁': 4, '戊': 5,
+        'A': 1, 'B': 2, 'C': 3,
+        '一': 1, '二': 2, '三': 3, # 針對組別為數字的情況 (如果存在)
+    }
+
+    # 檢查並應用權重
+    for char, weight in mapping.items():
+        if char in dept_name:
+            # 找到關鍵字後，權重越低越靠前
+            return base_weight + weight # 確保所有組別都在基礎名稱之後排序
+
+    # 2. 處理數字組別 (例如 組1, 組2)
+    match = re.search(r'組(\d+)|班(\d+)', dept_name)
+    if match:
+        num = int(match.group(1) or match.group(2))
+        return base_weight + num * 0.1
+        
+    # 如果沒有找到任何組別標識符，則保持原始字串排序（作為最後的保險）
+    return 1000
 
 def integrate_data(start_year: int, end_year: int) -> Dict:
     """
-    整合多年度的校系數據，以最新年度 (end_year) 的系名為基準進行追溯。
+    整合多年度的校系數據，修復合併案例追溯不完整的錯誤，並使用緩存避免重複 IO。
     
     :param start_year: 最早的年份 (e.g., 112)
     :param end_year: 最新的年份 (e.g., 115)
     :return: 整合後的 JSON 結構
     """
     
-    # 1. 載入最新一年的數據 (115)
-    integrated_data = load_json_file(CURRENT_DATA_FILE)
-
-    # 2. 建立所有年份的「舊系名 -> 新系名」正向追溯映射
-    #    [115] 定義 114年的舊系名 -> 115年的新系名
-    #    [114] 定義 113年的舊系名 -> 114年的新系名
-    forward_maps: Dict[int, Dict[str, Dict[str, List[str]]]] = {}
-    for year in range(end_year, start_year, -1):
-        # 載入 data/115/dept_renamed.json (它定義了 114年舊系名 -> 115年新系名)
-        renamed_file = os.path.join(DATA_DIR, str(year), 'dept_renamed.json')
-        forward_maps[year] = load_json_file(renamed_file) # 結構: { 學校: { 舊系名: [新系名列表] } }
-
-    # 3. 從最新年度開始，迭代每個學校和科系，並進行歷史數據追溯
+    # ----------------------------------------------------
+    # I. 數據緩存與初始化 (解決 IO 性能問題)
+    # ----------------------------------------------------
     
-    # 追溯過程需要一個總體集合來追蹤哪些舊系名已經被彙整過
-    # 結構: { '國立臺灣大學': { '中國文學系': True, ... } }
-    processed_old_depts: Dict[str, Dict[str, bool]] = {}
+    data_cache: Dict[str, Dict] = {}
+    
+    # 載入所有年份的歷史數據 (result.json)
+    for year in range(start_year, end_year): # e.g., 112, 113, 114
+        path = os.path.join(DATA_DIR, str(year), 'result.json')
+        data_cache[f'result_{year}'] = load_json_file(path)
 
+    # 載入所有年份的改名映射 (dept_renamed.json)
+    # 這裡的映射是 target_year 的映射，定義了 target_year-1 的舊名 -> target_year 的新名
+    # 我們需要逆向映射： 新名 -> 舊名列表
+    reverse_maps: Dict[int, Dict[str, Dict[str, List[str]]]] = {} 
+    
+    for year in range(start_year + 1, end_year + 1): # e.g., 113, 114, 115
+        path = os.path.join(DATA_DIR, str(year), 'dept_renamed.json')
+        forward_map_for_year = load_json_file(path) # 結構: { 學校: { 舊名: [新名列表] } }
+        
+        # 建立逆向映射: { 學校: { 新名: [舊名列表] } }
+        reverse_maps[year] = {}
+        
+        for uni, forward_map_for_uni in forward_map_for_year.items():
+            reverse_maps[year][uni] = {}
+            for old_dept_name, new_dept_names in forward_map_for_uni.items():
+                for new_dept_name in new_dept_names:
+                    # 如果新系名是 key, 舊系名是 value
+                    reverse_maps[year][uni].setdefault(new_dept_name, []).append(old_dept_name)
+
+    # 載入最新一年的數據 (115) 作為基準
+    current_data_path = os.path.join(DATA_DIR, str(end_year), 'all_department_criteria.json')
+    integrated_data = load_json_file(current_data_path)
+    
     final_integrated_data: Dict = {}
+    
+    # ----------------------------------------------------
+    # II. 核心數據追溯 (修正合併追溯問題)
+    # ----------------------------------------------------
 
-    # 初始化 final_integrated_data 的結構
-    for uni, depts in integrated_data.items():
+    for uni, depts_115 in integrated_data.items():
         if uni not in final_integrated_data:
             final_integrated_data[uni] = {}
-        for dept in depts.keys():
-             final_integrated_data[uni][dept] = {str(end_year): depts[dept]}
-             processed_old_depts.setdefault(uni, {})
-
-    for uni in integrated_data.keys():
-        for dept_115 in integrated_data[uni].keys():
             
-            # 從最新年 (end_year) 的系名開始追溯
-            current_old_dept_name = dept_115 # 這一輪要找的「舊系名」在 history_data_year 的名稱
+        for dept_115 in depts_115.keys():
             
-            # 迭代年份: 115 找 114 的數據，114 找 113 的數據
-            for target_year in range(end_year, start_year - 1, -1):
+            # 初始化 115 年數據
+            final_integrated_data[uni][dept_115] = {str(end_year): depts_115[dept_115]}
+            
+            # current_dept_names 存儲的是目標年份 (target_year) 的系名列表
+            # 我們從 end_year (115) 的單個系名開始
+            current_dept_names: List[str] = [dept_115]
+            
+            # 迭代年份: 從 end_year (115) 開始追溯到 start_year (112)
+            # target_year 表示當前迭代目標是哪個年份的映射
+            for target_year in range(end_year, start_year, -1): # e.g., 115, 114, 113
                 
-                history_data_year = target_year - 1
-                if history_data_year < start_year:
-                    break
+                history_data_year = target_year - 1 # e.g., 114, 113, 112
                 
-                # 載入當年的歷年數據
-                history_data_path = os.path.join(DATA_DIR, str(history_data_year), 'result.json')
-                history_data = load_json_file(history_data_path)
+                # 獲取逆向映射表: { 新名: [舊名列表] }
+                reverse_map_for_uni = reverse_maps.get(target_year, {}).get(uni, {})
                 
-                # 獲取追溯映射 (例如：target_year=115，我們使用 115 的映射來找 114 年的舊系名)
-                # target_map 結構: { 舊系名: [新系名列表] }
-                # 這裡的 target_map 定義了 history_data_year 的舊系名會變成什麼
-                forward_map_for_uni = forward_maps.get(target_year, {}).get(uni, {})
+                # 獲取歷史數據緩存
+                history_data = data_cache.get(f'result_{history_data_year}', {})
+                history_data_for_uni = history_data.get(uni, {})
                 
+                next_old_dept_names: List[str] = []
+                history_records_for_current_dept: List[Dict] = []
                 
-                # --- 核心查找邏輯 ---
-                
-                # 1. 找出 history_data_year 中，**名稱**為 current_old_dept_name 的系，
-                #    它在 history_data_year-1 年是什麼名字 (old_dept_names_in_history)。
-                
-                # 這裡我們需要判斷 history_data_year 的哪個系名 (history_dept_name) 
-                # 是由 history_data_year-1 的哪個系名變過來的。
-                
-                
-                # 2. **更簡單的邏輯**：我們只需要知道 current_old_dept_name 在 history_data_year-1 年的名稱是什麼。
-                #    但因為您的結構是以 115 年的系名為基準，我們只需要檢查 history_data_year 的系名是否包含在 115 年的列表裡。
-                
-                
-                # 🌟 重新定義追溯邏輯 🌟
-                # 我們要找的是 history_data_year 的哪個系名(key) 變成了 current_old_dept_name (在 target_year)
-                
-                
-                # 找出所有在 history_data_year 中，其新系名包含在 current_old_dept_name 追溯鏈上的 "舊系名"
-                old_dept_names_to_lookup: List[str] = []
-                
-                # 遍歷歷史數據年份 (history_data_year) 的系名 (old_dept_name)
-                for old_dept_name, new_dept_names in forward_map_for_uni.items():
-                    # 檢查這個舊系名 (old_dept_name) 變成的 "新系名" 列表
-                    # 是否包含我們目前正在追溯的系名 (current_old_dept_name)
-                    if current_old_dept_name in new_dept_names:
-                        old_dept_names_to_lookup.append(old_dept_name)
+                # 追溯所有可能的 "當前系名" (current_dept_names) 在歷史數據年 (history_data_year) 的"舊系名"
+                for dept_name_at_target_year in current_dept_names:
+                    
+                    # 1. 檢查是否有明確的逆向映射 (例如：114甲組+乙組 -> 115學士班)
+                    if dept_name_at_target_year in reverse_map_for_uni:
+                        # 找到了多個舊系名 (例如：甲組和乙組)
+                        old_names = reverse_map_for_uni[dept_name_at_target_year]
+                    else:
+                        # 假設沒有改名或合併
+                        old_names = [dept_name_at_target_year] 
+                    
+                    
+                    # 2. 獲取這些舊系名在歷史年份的數據，並準備下一輪追溯
+                    for old_name in old_names:
                         
-                # 如果找不到映射，假設名稱沒有變動
-                if not old_dept_names_to_lookup:
-                    old_dept_names_to_lookup = [current_old_dept_name] 
+                        if old_name in history_data_for_uni:
+                            # 找到歷史數據，加入列表
+                            history_item = history_data_for_uni[old_name].copy()
+                            history_item["校系名稱"] = old_name # 記錄當時的系名
+                            history_records_for_current_dept.append(history_item)
+                            
+                        # 無論是否有數據，這個舊名都會成為下一輪追溯的目標
+                        next_old_dept_names.append(old_name)
 
-                # --- 獲取並儲存歷史數據 ---
-                history_list: List[Dict] = []
-
-                for dept_name_in_history in old_dept_names_to_lookup:
-                    
-                    # 檢查是否已處理
-                    if processed_old_depts[uni].get(dept_name_in_history) == history_data_year:
-                        continue
-                    
-                    if dept_name_in_history in history_data.get(uni, {}):
-                        history_item = history_data[uni][dept_name_in_history].copy()
-                        history_item["校系名稱"] = dept_name_in_history
-                        history_list.append(history_item)
-                        processed_old_depts[uni][dept_name_in_history] = history_data_year
-
-                if history_list:
-                    final_integrated_data[uni][dept_115][str(history_data_year)] = history_list
                 
-                # --- 準備下一輪追溯 (DFS) ---
+                # 3. 儲存歷史紀錄到 final_integrated_data
+                if history_records_for_current_dept:
+                    # 使用自定義函數作為 Key 進行排序
+                    history_records_for_current_dept.sort(
+                        key=lambda x: get_department_sort_key(x["校系名稱"])
+                    )
+                    # 歷史紀錄可能有多筆 (例如：甲組和乙組的數據)
+                    final_integrated_data[uni][dept_115][str(history_data_year)] = history_records_for_current_dept
                 
-                # 如果是多對一 (合併) 或一對一 (改名)，下一輪的追溯名稱是列表中的第一個名稱。
-                if old_dept_names_to_lookup:
-                    current_old_dept_name = old_dept_names_to_lookup[0]
-                # 如果是今年系名沒有變動的情況，current_old_dept_name 保持不變。
+                # 4. 準備下一輪迭代 (將所有找到的舊系名作為下一輪要追溯的目標)
+                # 確保列表是唯一的
+                current_dept_names = list(set(next_old_dept_names)) 
+                
+                # 如果找不到任何舊系名，則停止追溯
+                if not current_dept_names:
+                    break
 
     return final_integrated_data
 
 
 # =======================================================
-# 執行程式碼
+# 執行程式碼 (保持不變)
 # =======================================================
 if __name__ == "__main__":
     
-    # 💡 模擬資料夾結構和檔案內容 (確保程式碼可以運行和驗證邏輯)
+    # 💡 確保您在此處取消註釋並運行了模擬數據，特別是 114年/113年 的映射，以測試追溯邏輯。
     
-    # # 創建資料夾
-    # for year in range(TARGET_START_YEAR, CURRENT_YEAR + 1):
-    #     os.makedirs(os.path.join(DATA_DIR, str(year)), exist_ok=True)
-    
-    # # --- 115 年數據 (最新年，作為基準) ---
-    # data_115 = {
-    #     "國立臺灣大學": {
-    #         "中國文學系": {"核定人數": 20, "學測標準": {"數A": "均標"}, "科目倍數": {"國文": 1.5}},
-    #         "外國語文學系": {"核定人數": 48, "學測標準": {"英聽": "A級"}, "科目倍數": {"英文": 2.0}},
-    #     },
-    #     "國立清華大學": {
-    #          "電機資訊學院學士班": {"核定人數": 100, "學測標準": {"數A": "頂標"}, "科目倍數": {"數甲": 1.5}} # 114年是甲乙組合併
-    #     }
-    # }
-    # with open(CURRENT_DATA_FILE, 'w', encoding='utf-8') as f:
-    #     json.dump(data_115, f, ensure_ascii=False, indent=4)
-        
-    # # --- 115年/114年的改名映射 (定義 115 <- 114 關係) ---
-    # renamed_115 = {
-    #     "國立清華大學": {
-    #         "電機資訊學院學士班": ["電機資訊學院學士班甲組", "電機資訊學院學士班乙組"] # 合併案例
-    #     },
-    #     "國立臺灣大學": {
-    #         "中國文學系": ["中國文學系"] # 沒改名，但寫入映射
-    #     }
-    # }
-    # with open(os.path.join(DATA_DIR, '115', 'dept_renamed.json'), 'w', encoding='utf-8') as f:
-    #     json.dump(renamed_115, f, ensure_ascii=False, indent=4)
-
-
-    # # --- 114 年數據 (歷史數據) ---
-    # data_114 = {
-    #     "國立臺灣大學": {
-    #         "中國文學系": {"科目倍數": {"國文": 1.5}, "一般考生錄取標準": 52.8, "達標比例": 2.82}, # 114 年名
-    #         "外國語文學系": {"科目倍數": {"英文": 2.0}, "一般考生錄取標準": 52.12, "達標比例": 3.8},
-    #     },
-    #     "國立清華大學": {
-    #         "電機資訊學院學士班甲組": {"科目倍數": {"數甲": 1.5}, "錄取人數": 60, "一般考生錄取標準": 65.0}, 
-    #         "電機資訊學院學士班乙組": {"科目倍數": {"數甲": 1.5}, "錄取人數": 40, "一般考生錄取標準": 60.0},
-    #     }
-    # }
-    # with open(os.path.join(DATA_DIR, '114', 'result.json'), 'w', encoding='utf-8') as f:
-    #     json.dump(data_114, f, ensure_ascii=False, indent=4)
-
-
-    # # --- 114年/113年的改名映射 (定義 114 <- 113 關係) ---
-    # renamed_114 = {
-    #     "國立臺灣大學": {
-    #          "中國文學系": ["國文系"] # 模擬改名：114年叫中國文學系 <- 113年叫國文系
-    #     }
-    # }
-    # with open(os.path.join(DATA_DIR, '114', 'dept_renamed.json'), 'w', encoding='utf-8') as f:
-    #     json.dump(renamed_114, f, ensure_ascii=False, indent=4)
-        
-        
-    # # --- 113 年數據 (歷史數據) ---
-    # data_113 = {
-    #     "國立臺灣大學": {
-    #         "國文系": {"科目倍數": {"國文": 1.5}, "一般考生錄取標準": 51.8, "達標比例": 4.64}, # 113 年名
-    #         "外國語文學系": {"科目倍數": {"英文": 2.0}, "一般考生錄取標準": 50.0, "達標比例": 4.0},
-    #     }
-    # }
-    # with open(os.path.join(DATA_DIR, '113', 'result.json'), 'w', encoding='utf-8') as f:
-    #     json.dump(data_113, f, ensure_ascii=False, indent=4)
-
-    # 執行整合
     final_result = integrate_data(TARGET_START_YEAR, CURRENT_YEAR)
 
     # 寫入最終結果
+    # 確保 datas 資料夾存在，否則會報錯
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True) 
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(final_result, f, ensure_ascii=False, indent=4)
     
