@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name=description content="115學年度校系分則查詢系統">
+    <meta name="keywords" content="">
+        <title>115學年度校系分則查詢系統</title>
+
+	<!--<link href="js/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />-->
+	 
+	<!--<script src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js" type="text/javascript"></script>-->	
+    <!--<script src="bootstrap/js/jquery_1.11.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>       
+    <link href="js/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href=bootstrap/css/bootstrap_ncku.css rel=stylesheet>
+    <link href=bootstrap/css/bootstrap_ncku_1.css rel=stylesheet>
+    <link href=bootstrap/css/responsive.css rel=stylesheet>
+        <!-- <link href=bootstrap/css/bootstrap-theme_ncku.css rel=stylesheet> -->
+    <!--<script src=bootstrap/js/bootstrap.js></script>-->
+    <script src=bootstrap-5.3.3-dist/js/bootstrap.min.js></script>
+
+    <link rel="icon" href="images/favicon.ico">   
+
+    <style type="text/css">
+        body {
+            background: none; 
+            background-color: #d9edf7 
+        }
+
+        .container {
+            min-width: 407px;
+        }
+
+        /*@media (min-width: 992px) {
+            .container {
+                margin-top: 20px;
+            }
+        }*/
+
+        @media (min-width: 992px) {
+            #div-org {
+                min-width: 407px;
+            }
+        }
+
+        #search .title {
+           color: #337ab7; 
+           font-weight: 700;
+        }
+
+        #gotop {
+            display: none;
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            font-size: 18px;
+            background: #33b5e5;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            line-height: 50px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .div-copyright {
+            bottom: 0;
+        }
+
+        #footer {
+            padding: 10px 0px;
+        }
+
+        #h2-org {
+            margin-bottom: 0px; 
+            color: #13aad7; 
+            font-weight: bold; 
+            font-size: 26px;
+        }
+
+        #text-org {
+            font-size: 10px; 
+            color: #757575; 
+            font-weight: 100;
+        }
+
+        #h2-uac {
+            margin-top: 5px;
+        }
+    </style>
+
+    <script type='text/javascript'>
+        
+        $(document).ready(function(){
+            $(function(){
+                $('#gotop').click(function(){
+                    jQuery('html,body').animate({
+                        scrollTop:0
+                    },500);
+                });
+                $(window).scroll(function() {
+                    
+                    if ( $(this).scrollTop() > 100){
+                        $('#gotop').fadeIn('fast');
+                    } else {
+                        $('#gotop').stop().fadeOut('fast');
+                    }
+                });
+            });
+                    
+        });
+    </script>
+	<!-- google分析 -->
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX"></script>-->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX" integrity="sha256-u2nNNkss3diJbM6PEKRKHYIWXeTz4NtkADmC9VHwmsE=" crossorigin="anonymous"></script>
+	
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		
+		  gtag('config', 'G-HM8BXQY9HX');
+		</script>
+	
+
+</head>
+<body>
+        <div class="text-center" id="div-org">
+        <h2 id="h2-org">大學考試入學分發委員會</h2>
+        <!--<span id="text-org">UAC</span>-->
+        <h2 id="h2-uac"><b>115學年度校系分則查詢系統</b></h2>
+        <!--<span>查詢人次：人次</span><br>--></br>
+        <span>本查詢系統結果僅供參考，若與簡章內容不符，概以正式簡章為準</span>
+    </div> 
+    
+    <div class="container">
+        <style type="text/css">
+    #search {
+        background-color: #d9edf7;
+        padding: 5px;
+        border-top: 1px solid #cdcdcd; 
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: 30px;
+    }
+
+    @media (min-width: 992px) {
+        .div-search {
+            margin-bottom: 5px;
+        }
+    }
+
+    .btn-school,
+    .btn-detail {
+        width: 100%;
+        text-align: left;
+    }
+
+    .span-search {
+        /*padding-left: 15%;*/
+    }
+    .title:hover{
+    	cursor: pointer;
+    }
+</style>
+<script>
+	//查詢條件展開隱藏
+	jQuery(function(){
+	  $(".title").click(function(){$("#search_condition").slideToggle("slow");});
+	});
+</script>
+<script src="views/search/js/result.js?t=1765635102"></script>
+
+<div id="search">
+            <div>
+            <p class="title">您設定的查詢條件   ▼</p>
+            <div id='search_condition' style='display:none;'>
+	            <p class="title">
+	            地區別：桃園新竹苗栗<br>	        </div>
+        </div>
+                    <p class="text-center" style="margin-top: 10px;">
+                <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+            </p>
+                <div style="margin: 20px 0px;">
+                            <form id="search-form" action="./index.php?c=search&m=detail" method="post" target="_blank">
+                    <div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="0"
+                                    ><span class="span-search">008-中原大學</span></button><div class="div-school" id="div-0"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00811"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">應用數學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00810"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">物理學系物理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00830"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">物理學系光電與材料科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00818"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">化學系化學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00819"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">化學系材料化學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00820"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">心理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00812"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">生物科技學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00826"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">化學工程學系綠能製程組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00832"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">化學工程學系生化工程組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00833"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">化學工程學系材料工程組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00824"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">土木工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00817"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">機械工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00825"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">生物醫學工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00828"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">環境工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00831"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">電機資訊學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00808"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">工業與系統工程學系工程組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00834"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">工業與系統工程學系管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00815"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">電子工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00814"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00816"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00821"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">電機資訊學院智慧運算與大數據學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00813"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">企業管理學系服務業管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00835"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">企業管理學系高科技業管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00836"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">企業管理學系工商管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00806"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">國際經營與貿易學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00807"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">會計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00823"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00829"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">財務金融學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00838"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">財經法律學系財貿法組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00805"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">財經法律學系科技法組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00809"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">建築學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00801"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">室內設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00803"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">商業設計學系商業設計組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00837"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">商業設計學系產品設計組甲類</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00839"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">商業設計學系產品設計組乙類</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00827"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">地景建築學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00802"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">特殊教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00804"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">應用外國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00822"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">應用華語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00840"
+                                            ><span class="span-search">中原大學</span><br><span class="span-search">半導體產業學士學位學程</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="1"
+                                    ><span class="span-search">011-國立清華大學</span></button><div class="div-school" id="div-1"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01103"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">中國文學系甲組(一般組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01133"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">中國文學系乙組(華語文教學組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01102"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">外國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01122"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">人文社會學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01136"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">教育與學習科技學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01138"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">幼兒教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01140"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">特殊教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01141"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">教育心理與諮商學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01149"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">教育心理與諮商學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01143"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">英語教學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01148"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">運動科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01144"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">竹師教育學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01139"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">環境與文化資源學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01118"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">經濟學系第1組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01131"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">經濟學系第2組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01120"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">科技管理學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01101"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">計量財務金融學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01151"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">計量財務金融學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01104"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">數學系甲組(數學組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01105"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">數學系乙組(應用數學組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01106"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">物理學系物理組(甲組一般組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01134"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">物理學系物理組(乙組天文物理組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01107"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">物理學系光電物理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01108"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01121"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">理學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01109"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">生醫工程與環境科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01110"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">工程與系統科學系甲組(低碳綠能組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01119"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">工程與系統科學系乙組(智慧奈米系統組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01127"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">原子科學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01111"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">化學工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01112"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">動力機械工程學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01130"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">動力機械工程學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01113"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">材料科學工程學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01135"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">材料科學工程學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01114"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">工業工程與工程管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01123"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">工學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01115"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">電機工程學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01132"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">電機工程學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01116"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">資訊工程學系甲組(電子資訊組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01129"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">資訊工程學系乙組(資訊工程組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01142"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">資訊工程學系丙組(人工智慧組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01125"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">電機資訊學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01117"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">生命科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01128"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">醫學科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01124"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">生命科學暨醫學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01146"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">藝術與設計學系創作組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01145"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">藝術與設計學系設計組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01147"
+                                            ><span class="span-search">國立清華大學</span><br><span class="span-search">藝術學院學士班</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="2"
+                                    ><span class="span-search">013-國立陽明交通大學</span></button><div class="div-school" id="div-2"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01303"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">電機工程學系甲組(電資國際組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01304"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">電機工程學系乙組(電機工程組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01364"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">電機工程學系丙組(醫學電資組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01319"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">光電工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01305"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">資訊工程學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01306"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">資訊工程學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01325"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">半導體工程學系固態電子組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01324"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">半導體工程學系奈米科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01309"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">材料科學與工程學系-伊利諾雙聯組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01302"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">材料科學與工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01307"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">機械工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01308"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">土木工程學系(科技暨基礎建設永續發展組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01326"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">理學院科學學士學位學程甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01318"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">電子物理學系光電與奈米科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01310"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">電子物理學系電子物理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01312"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">應用化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01311"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">應用數學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01313"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">生物科技學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01323"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">生物科技學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01320"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">資訊管理與財務金融學系資訊管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01327"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">資訊管理與財務金融學系財務金融組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01314"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">管理科學系(自然組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01362"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">管理科學系(社會組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01315"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">運輸與物流管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01316"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">工業工程與管理學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01328"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">工業工程與管理學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01317"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">外國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01322"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">傳播與科技學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01321"
+                                            ><span class="span-search">國立陽明交通大學</span><br><span class="span-search">人文社會學系</span></button></div></div></div><div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="3"
+                                    ><span class="span-search">016-國立中央大學</span></button><div class="div-school" id="div-3"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01601"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">中國文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01603"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">英美語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01602"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">法國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01631"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">文學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01629"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">數學系計算與資料科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01612"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">數學系數學科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01611"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">物理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01618"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">化學學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01623"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">光電科學與工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01624"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">理學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01607"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">土木工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01615"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">機械工程學系先進材料與精密製造組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01614"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">機械工程學系光機電工程組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01616"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">機械工程學系智慧系統與永續能源組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01633"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">機械工程學系前瞻半導體國際組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01608"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">化學工程與材料工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01627"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">工學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01604"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">企業管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01617"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01606"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">經濟學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01605"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">財務金融學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01620"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01619"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01621"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">通訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01628"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">資訊電機學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01609"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">大氣科學學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01622"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">太空科學與工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01610"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">地球科學學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01630"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">地球科學學院學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01625"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">客家語文暨社會科學學系客家語文及傳播組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01632"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">客家語文暨社會科學學系客家社會及政策組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01634"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">法律與政府學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01613"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">生命科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="01626"
+                                            ><span class="span-search">國立中央大學</span><br><span class="span-search">生醫科學與工程學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="4"
+                                    ><span class="span-search">030-長庚大學</span></button><div class="div-school" id="div-4"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03013"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">醫學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03018"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">中醫學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03006"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">護理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03014"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">醫學生物技術暨檢驗學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03015"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">醫學影像暨放射科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03017"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">物理治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03016"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">職能治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03019"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">生物醫學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03020"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">呼吸治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03008"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03009"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">機械工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03010"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">化工與材料工程學系(化學工程組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03021"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">化工與材料工程學系(材料工程組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03011"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">電子工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03012"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03004"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">生物醫學工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03022"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">生物醫學工程學系(國際雙聯組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03007"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">人工智慧學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03003"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">醫務管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03002"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">工商管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03001"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">工業設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03005"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03026"
+                                            ><span class="span-search">長庚大學</span><br><span class="span-search">數位金融科技學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="5"
+                                    ><span class="span-search">039-國立體育大學</span></button><div class="div-school" id="div-5"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03902"
+                                            ><span class="span-search">國立體育大學</span><br><span class="span-search">體育推廣學系A</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03903"
+                                            ><span class="span-search">國立體育大學</span><br><span class="span-search">體育推廣學系B</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03904"
+                                            ><span class="span-search">國立體育大學</span><br><span class="span-search">運動保健學系A</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03906"
+                                            ><span class="span-search">國立體育大學</span><br><span class="span-search">運動保健學系B</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03901"
+                                            ><span class="span-search">國立體育大學</span><br><span class="span-search">休閒產業經營學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03905"
+                                            ><span class="span-search">國立體育大學</span><br><span class="span-search">適應體育學系A</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03907"
+                                            ><span class="span-search">國立體育大學</span><br><span class="span-search">適應體育學系B</span></button></div></div></div><div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="6"
+                                    ><span class="span-search">040-元智大學</span></button><div class="div-school" id="div-6"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04015"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">護理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04003"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">管理學院學士班(主修：數位行銷與人力資源)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04004"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">管理學院學士班(主修：財務金融A組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04016"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">管理學院學士班(主修：財務金融B組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04018"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">管理學院學士班(主修：財務金融C組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04005"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">管理學院學士班(主修：國際企業管理)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04006"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">管理學院學士班(主修：會計)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04020"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">管理學院學士班(英語專班)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04001"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">應用外語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04009"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">中國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04010"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">社會暨政策科學學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04021"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">藝術與設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04029"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">人文社會學院英語學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04017"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊管理學系(社會組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04026"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊管理學系(自然組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04019"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊傳播學系(智慧科技應用組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04008"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊傳播學系(數位媒體設計-創作組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04033"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊傳播學系(數位媒體設計-美術組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04007"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊工程學系(資訊工程組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04034"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊工程學系(資訊應用組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04031"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">資訊學院英語學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04012"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">機械工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04013"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">化學工程與材料科學學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04014"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">工業工程與管理學系(A組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04024"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">工業工程與管理學系(B組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04030"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">工程學院英語學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04011"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">電機工程學系(甲組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04023"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">電機工程學系(乙組)(A組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04028"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">電機工程學系(乙組)(B組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04022"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">電機工程學系(丙組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04032"
+                                            ><span class="span-search">元智大學</span><br><span class="span-search">電機通訊學院英語學士班</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="7"
+                                    ><span class="span-search">046-銘傳大學</span></button><div class="div-school" id="div-7"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04649"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">國際事務與外交學士學位學程(全英語授課．台北校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04661"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">資訊科技應用與管理學士學位學程(全英語授課．桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04604"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">應用中文與華語文教學系文教傳播組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04655"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">應用中文與華語文教學系語文創作組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04606"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">應用英語學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04605"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">應用日語學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04615"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">商業設計學系視覺傳達與品牌創新組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04674"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">商業設計學系AI應用與智慧設計組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04614"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">商品設計學系人工智慧應用組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04658"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">商品設計學系福祉生活設計組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04665"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">商品設計學系產品互動設計組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04622"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">數位媒體設計學系遊戲互動與AI應用組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04638"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">數位媒體設計學系動畫文創組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04644"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">數位媒體設計學系影視特效與AI創意組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04624"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">建築學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04632"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">都市設計與永續發展學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04623"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">觀光事業學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04639"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">休閒遊憩管理學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04626"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">餐旅管理學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04609"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">犯罪防治學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04631"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">公共事務與行政管理學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04633"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">諮商臨床與工商心理學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04620"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">金融學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04647"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">金融科技應用學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04621"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">資訊管理學系人工智慧應用組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04628"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">資訊管理學系巨量資料管理組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04641"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">資訊管理學系電子商務管理組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04601"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">人工智慧應用學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04640"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">資訊工程學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04627"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">電機工程學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04667"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">半導體應用學士學位學程(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04629"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">智慧醫療與永續管理學系(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04630"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">生物科技學系智慧應用生技組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04662"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">生物科技學系食品生技組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04634"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">生物醫學工程學系生醫光電組(桃園校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04645"
+                                            ><span class="span-search">銘傳大學</span><br><span class="span-search">生物醫學工程學系人工智慧醫療組(桃園校區)</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="8"
+                                    ><span class="span-search">065-玄奘大學</span></button><div class="div-school" id="div-8"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="06512"
+                                            ><span class="span-search">玄奘大學</span><br><span class="span-search">社會工作學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="06508"
+                                            ><span class="span-search">玄奘大學</span><br><span class="span-search">應用心理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="06511"
+                                            ><span class="span-search">玄奘大學</span><br><span class="span-search">法律學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="06501"
+                                            ><span class="span-search">玄奘大學</span><br><span class="span-search">大眾傳播學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="06509"
+                                            ><span class="span-search">玄奘大學</span><br><span class="span-search">視覺傳達設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="06518"
+                                            ><span class="span-search">玄奘大學</span><br><span class="span-search">應用日語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="06510"
+                                            ><span class="span-search">玄奘大學</span><br><span class="span-search">餐旅管理學系</span></button></div></div></div><div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="9"
+                                    ><span class="span-search">151-國立聯合大學</span></button><div class="div-school" id="div-9"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15103"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">機械工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15113"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">化學工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15104"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">材料科學工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15107"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">環境與安全衛生工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15105"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">土木與防災工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15114"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">能源工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15106"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">建築學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15112"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">工業設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15102"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15101"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">電子工程學系(甲組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15120"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">電子工程學系(乙組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15110"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">光電工程學系A組(光電半導體組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15122"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">光電工程學系B組(智慧光電應用組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15115"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15111"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">經營管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15108"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">財務金融學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15109"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15116"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">臺灣語文與傳播學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15117"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">華語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15121"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">文化觀光產業學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15118"
+                                            ><span class="span-search">國立聯合大學</span><br><span class="span-search">文化創意與數位行銷學系</span></button></div></div>                    <!--<input type="hidden" name="syear" value="">-->
+
+                    <input type="hidden" name="dep_id" value="0">
+                </form>
+                    </div>
+        <p class="text-center">
+        <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+    </p>
+</div>
+    </div>
+
+    <footer id="footer">
+        <div id="gotop"><center>Top</center></div> 
+
+        <div class="div-copyright text-center">
+            © 2025 UAC
+        </div>
+    </footer>
+</body>
+</html>

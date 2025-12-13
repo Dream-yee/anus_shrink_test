@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name=description content="115學年度校系分則查詢系統">
+    <meta name="keywords" content="">
+        <title>115學年度校系分則查詢系統</title>
+
+	<!--<link href="js/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />-->
+	 
+	<!--<script src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js" type="text/javascript"></script>-->	
+    <!--<script src="bootstrap/js/jquery_1.11.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>       
+    <link href="js/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href=bootstrap/css/bootstrap_ncku.css rel=stylesheet>
+    <link href=bootstrap/css/bootstrap_ncku_1.css rel=stylesheet>
+    <link href=bootstrap/css/responsive.css rel=stylesheet>
+        <!-- <link href=bootstrap/css/bootstrap-theme_ncku.css rel=stylesheet> -->
+    <!--<script src=bootstrap/js/bootstrap.js></script>-->
+    <script src=bootstrap-5.3.3-dist/js/bootstrap.min.js></script>
+
+    <link rel="icon" href="images/favicon.ico">   
+
+    <style type="text/css">
+        body {
+            background: none; 
+            background-color: #d9edf7 
+        }
+
+        .container {
+            min-width: 407px;
+        }
+
+        /*@media (min-width: 992px) {
+            .container {
+                margin-top: 20px;
+            }
+        }*/
+
+        @media (min-width: 992px) {
+            #div-org {
+                min-width: 407px;
+            }
+        }
+
+        #search .title {
+           color: #337ab7; 
+           font-weight: 700;
+        }
+
+        #gotop {
+            display: none;
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            font-size: 18px;
+            background: #33b5e5;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            line-height: 50px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .div-copyright {
+            bottom: 0;
+        }
+
+        #footer {
+            padding: 10px 0px;
+        }
+
+        #h2-org {
+            margin-bottom: 0px; 
+            color: #13aad7; 
+            font-weight: bold; 
+            font-size: 26px;
+        }
+
+        #text-org {
+            font-size: 10px; 
+            color: #757575; 
+            font-weight: 100;
+        }
+
+        #h2-uac {
+            margin-top: 5px;
+        }
+    </style>
+
+    <script type='text/javascript'>
+        
+        $(document).ready(function(){
+            $(function(){
+                $('#gotop').click(function(){
+                    jQuery('html,body').animate({
+                        scrollTop:0
+                    },500);
+                });
+                $(window).scroll(function() {
+                    
+                    if ( $(this).scrollTop() > 100){
+                        $('#gotop').fadeIn('fast');
+                    } else {
+                        $('#gotop').stop().fadeOut('fast');
+                    }
+                });
+            });
+                    
+        });
+    </script>
+	<!-- google分析 -->
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX"></script>-->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX" integrity="sha256-u2nNNkss3diJbM6PEKRKHYIWXeTz4NtkADmC9VHwmsE=" crossorigin="anonymous"></script>
+	
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		
+		  gtag('config', 'G-HM8BXQY9HX');
+		</script>
+	
+
+</head>
+<body>
+        <div class="text-center" id="div-org">
+        <h2 id="h2-org">大學考試入學分發委員會</h2>
+        <!--<span id="text-org">UAC</span>-->
+        <h2 id="h2-uac"><b>115學年度校系分則查詢系統</b></h2>
+        <!--<span>查詢人次：人次</span><br>--></br>
+        <span>本查詢系統結果僅供參考，若與簡章內容不符，概以正式簡章為準</span>
+    </div> 
+    
+    <div class="container">
+        <style type="text/css">
+    #search {
+        background-color: #d9edf7;
+        padding: 5px;
+        border-top: 1px solid #cdcdcd; 
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: 30px;
+    }
+
+    @media (min-width: 992px) {
+        .div-search {
+            margin-bottom: 5px;
+        }
+    }
+
+    .btn-school,
+    .btn-detail {
+        width: 100%;
+        text-align: left;
+    }
+
+    .span-search {
+        /*padding-left: 15%;*/
+    }
+    .title:hover{
+    	cursor: pointer;
+    }
+</style>
+<script>
+	//查詢條件展開隱藏
+	jQuery(function(){
+	  $(".title").click(function(){$("#search_condition").slideToggle("slow");});
+	});
+</script>
+<script src="views/search/js/result.js?t=1765635139"></script>
+
+<div id="search">
+            <div>
+            <p class="title">您設定的查詢條件   ▼</p>
+            <div id='search_condition' style='display:none;'>
+	            <p class="title">
+	            地區別：高雄屏東<br>	        </div>
+        </div>
+                    <p class="text-center" style="margin-top: 10px;">
+                <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+            </p>
+                <div style="margin: 20px 0px;">
+                            <form id="search-form" action="./index.php?c=search&m=detail" method="post" target="_blank">
+                    <div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="0"
+                                    ><span class="span-search">007-高雄醫學大學</span></button><div class="div-school" id="div-0"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00713"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">醫學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00719"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">運動醫學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00720"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">呼吸治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00714"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">牙醫學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00717"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">口腔衛生學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00703"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">藥學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00711"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">香粧品學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00704"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">護理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00716"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">公共衛生學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00705"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">醫學檢驗生物技術學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00715"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">醫學影像暨放射科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00707"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">職能治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00706"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">物理治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00718"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">醫務管理暨醫療資訊學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00712"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">醫藥暨應用化學系應用化學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00709"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">醫藥暨應用化學系醫藥化學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00702"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">生物醫學暨環境生物學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00710"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">生物科技學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00722"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">生命科學院學士班(英語組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00701"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">心理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="00708"
+                                            ><span class="span-search">高雄醫學大學</span><br><span class="span-search">醫學社會學與社會工作學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="1"
+                                    ><span class="span-search">022-國立高雄師範大學</span></button><div class="div-school" id="div-1"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02201"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">國文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02204"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">英語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02207"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">地理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02213"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">數學系數學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02216"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">數學系應用數學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02212"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02203"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">物理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02215"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">生物科技系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02211"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02210"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">特殊教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02214"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">體育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02221"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">事業經營學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02202"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">工業科技教育學系科技教育與訓練組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02219"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">工業科技教育學系能源與冷凍空調組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02205"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">工業設計學系(自然組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02222"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">工業設計學系(社會組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02217"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">電子工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02220"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">軟體工程與管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02206"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02208"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">美術學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02209"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">音樂學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02218"
+                                            ><span class="span-search">國立高雄師範大學</span><br><span class="span-search">視覺設計學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="2"
+                                    ><span class="span-search">027-國立中山大學</span></button><div class="div-school" id="div-2"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02701"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">中國文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02702"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">外國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02703"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">音樂學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02718"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">劇場藝術學系(男)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02739"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">劇場藝術學系(女)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02715"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">生物科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02733"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">生物科學系英語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02712"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02730"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">化學系英語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02713"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">物理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02726"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">物理學系量子科技組(全英)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02714"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">應用數學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02732"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">應用數學系英語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02710"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02720"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">電機工程學系英語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02711"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">機械與機電工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02724"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">機械與機電工程學系全英語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02709"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02734"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">資訊工程學系全英語學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02721"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">光電工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02735"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">光電工程學系全英語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02717"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">材料與光電科學學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02727"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">材料與光電科學學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02728"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">材料與光電科學學系全英語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02705"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">企業管理學系(A組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02731"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">企業管理學系(B組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02707"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02706"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">財務管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02722"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">國際經營管理全英語學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02716"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">海洋生物科技暨資源學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02708"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">海洋環境及工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02723"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">海洋科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02704"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">政治經濟學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02719"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">社會學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02729"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">人文暨科技跨領域學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02736"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">生物醫學科技學系全英語學士班生物醫學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02737"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">生物醫學科技學系全英語學士班生醫工程組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="02738"
+                                            ><span class="span-search">國立中山大學</span><br><span class="span-search">護理學系</span></button></div></div></div><div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="3"
+                                    ><span class="span-search">036-國立屏東大學</span></button><div class="div-school" id="div-3"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03601"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03604"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">幼兒教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03608"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">特殊教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03602"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">教育心理與輔導學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03609"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">中國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03603"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">英語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03615"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">文化創意產業學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03605"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">社會發展學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03629"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">應用英語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03630"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">應用日語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03606"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">視覺藝術學系數位媒體設計組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03618"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">商業大數據學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03620"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">行銷與流通管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03619"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">休閒事業經營學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03621"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">不動產經營學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03622"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">企業管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03623"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">國際經營與貿易學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03624"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">財務金融學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03625"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">會計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03610"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">應用化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03612"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">應用數學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03614"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">應用物理系半導體組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03616"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">應用物理系光電暨材料組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03617"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">科學傳播學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03631"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">智慧機器人學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03628"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">電腦與通訊學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03626"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03611"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">電腦科學與人工智慧學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03627"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03607"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">音樂學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03633"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">視覺藝術學系美術組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03613"
+                                            ><span class="span-search">國立屏東大學</span><br><span class="span-search">體育學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="4"
+                                    ><span class="span-search">045-義守大學</span></button><div class="div-school" id="div-4"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04501"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04511"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">電子工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04502"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">資訊工程學系資訊工程組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04551"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">資訊工程學系資訊應用組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04505"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">機械與自動化工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04514"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">化學工程學系甲組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04537"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">化學工程學系乙組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04544"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">土木工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04506"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">材料科學與工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04556"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">智慧科技英語學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04577"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">半導體學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04546"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">資訊管理學系人工智慧技術與應用組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04503"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">資訊管理學系智慧商務與物聯網組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04518"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">企業管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04507"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">財務金融管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04520"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">會計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04513"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">醫務管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04561"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">餐旅管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04541"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">廚藝暨美食學學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04534"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">國際企業經營英語學士學位學程(國際學院)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04527"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">應用日語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04528"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">大眾傳播學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04539"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">電影與電視學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04522"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">視覺藝術與設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04530"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">營養學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04508"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">生物醫學工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04525"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">醫學科學與生物科技學系醫藥組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04550"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">醫學科學與生物科技學系生技組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04509"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">護理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04510"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">醫學影像暨放射科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04523"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">物理治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04524"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">職能治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04576"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">醫學檢驗技術學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="04575"
+                                            ><span class="span-search">義守大學</span><br><span class="span-search">醫學系(公費生)</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="5"
+                                    ><span class="span-search">050-實踐大學</span></button><div class="div-school" id="div-5"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05058"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">國際企業管理學系(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05063"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">金融管理學系財務金融組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05064"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">金融管理學系金融理財組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05065"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">金融管理學系金融實務組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05011"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">資訊管理學系人工智慧與雲端應用組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05044"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">資訊管理學系物聯網應用組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05036"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">資訊科技與通訊學系智慧機器人與無人機組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05041"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">資訊科技與通訊學系人工智慧物聯網組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05013"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">觀光管理學系文化與自然旅遊經營組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05052"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">觀光管理學系旅運暨運動觀光事業組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05031"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">休閒產業管理學系環境教育與休閒規劃設計組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05056"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">休閒產業管理學系遊憩運動企劃組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05060"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">休閒產業管理學系精品咖啡烘培經營組(高雄校區)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="05019"
+                                            ><span class="span-search">實踐大學</span><br><span class="span-search">應用日文學系(高雄校區)</span></button></div></div></div><div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="6"
+                                    ><span class="span-search">101-國立高雄大學</span></button><div class="div-school" id="div-6"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10101"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">西洋語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10109"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">運動健康與休閒學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10120"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">東亞語文學系日語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10122"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">東亞語文學系韓語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10121"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">東亞語文學系越語組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10117"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">工藝與創意設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10123"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">建築學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10112"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">法律學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10113"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">政治法律學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10114"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">財經法律學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10102"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">應用經濟學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10103"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">亞太工商管理學系企業管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10106"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">亞太工商管理學系工業管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10110"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10111"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">財務金融學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10107"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">應用數學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10108"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">應用化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10116"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">應用物理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10115"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">生命科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10104"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10105"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">土木與環境工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10118"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">化學工程及材料工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10119"
+                                            ><span class="span-search">國立高雄大學</span><br><span class="span-search">資訊工程學系</span></button></div></div>                    <!--<input type="hidden" name="syear" value="">-->
+
+                    <input type="hidden" name="dep_id" value="0">
+                </form>
+                    </div>
+        <p class="text-center">
+        <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+    </p>
+</div>
+    </div>
+
+    <footer id="footer">
+        <div id="gotop"><center>Top</center></div> 
+
+        <div class="div-copyright text-center">
+            © 2025 UAC
+        </div>
+    </footer>
+</body>
+</html>

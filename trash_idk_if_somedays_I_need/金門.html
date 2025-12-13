@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name=description content="115學年度校系分則查詢系統">
+    <meta name="keywords" content="">
+        <title>115學年度校系分則查詢系統</title>
+
+	<!--<link href="js/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />-->
+	 
+	<!--<script src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js" type="text/javascript"></script>-->	
+    <!--<script src="bootstrap/js/jquery_1.11.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>       
+    <link href="js/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href=bootstrap/css/bootstrap_ncku.css rel=stylesheet>
+    <link href=bootstrap/css/bootstrap_ncku_1.css rel=stylesheet>
+    <link href=bootstrap/css/responsive.css rel=stylesheet>
+        <!-- <link href=bootstrap/css/bootstrap-theme_ncku.css rel=stylesheet> -->
+    <!--<script src=bootstrap/js/bootstrap.js></script>-->
+    <script src=bootstrap-5.3.3-dist/js/bootstrap.min.js></script>
+
+    <link rel="icon" href="images/favicon.ico">   
+
+    <style type="text/css">
+        body {
+            background: none; 
+            background-color: #d9edf7 
+        }
+
+        .container {
+            min-width: 407px;
+        }
+
+        /*@media (min-width: 992px) {
+            .container {
+                margin-top: 20px;
+            }
+        }*/
+
+        @media (min-width: 992px) {
+            #div-org {
+                min-width: 407px;
+            }
+        }
+
+        #search .title {
+           color: #337ab7; 
+           font-weight: 700;
+        }
+
+        #gotop {
+            display: none;
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            font-size: 18px;
+            background: #33b5e5;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            line-height: 50px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .div-copyright {
+            bottom: 0;
+        }
+
+        #footer {
+            padding: 10px 0px;
+        }
+
+        #h2-org {
+            margin-bottom: 0px; 
+            color: #13aad7; 
+            font-weight: bold; 
+            font-size: 26px;
+        }
+
+        #text-org {
+            font-size: 10px; 
+            color: #757575; 
+            font-weight: 100;
+        }
+
+        #h2-uac {
+            margin-top: 5px;
+        }
+    </style>
+
+    <script type='text/javascript'>
+        
+        $(document).ready(function(){
+            $(function(){
+                $('#gotop').click(function(){
+                    jQuery('html,body').animate({
+                        scrollTop:0
+                    },500);
+                });
+                $(window).scroll(function() {
+                    
+                    if ( $(this).scrollTop() > 100){
+                        $('#gotop').fadeIn('fast');
+                    } else {
+                        $('#gotop').stop().fadeOut('fast');
+                    }
+                });
+            });
+                    
+        });
+    </script>
+	<!-- google分析 -->
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX"></script>-->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX" integrity="sha256-u2nNNkss3diJbM6PEKRKHYIWXeTz4NtkADmC9VHwmsE=" crossorigin="anonymous"></script>
+	
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		
+		  gtag('config', 'G-HM8BXQY9HX');
+		</script>
+	
+
+</head>
+<body>
+        <div class="text-center" id="div-org">
+        <h2 id="h2-org">大學考試入學分發委員會</h2>
+        <!--<span id="text-org">UAC</span>-->
+        <h2 id="h2-uac"><b>115學年度校系分則查詢系統</b></h2>
+        <!--<span>查詢人次：人次</span><br>--></br>
+        <span>本查詢系統結果僅供參考，若與簡章內容不符，概以正式簡章為準</span>
+    </div> 
+    
+    <div class="container">
+        <style type="text/css">
+    #search {
+        background-color: #d9edf7;
+        padding: 5px;
+        border-top: 1px solid #cdcdcd; 
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: 30px;
+    }
+
+    @media (min-width: 992px) {
+        .div-search {
+            margin-bottom: 5px;
+        }
+    }
+
+    .btn-school,
+    .btn-detail {
+        width: 100%;
+        text-align: left;
+    }
+
+    .span-search {
+        /*padding-left: 15%;*/
+    }
+    .title:hover{
+    	cursor: pointer;
+    }
+</style>
+<script>
+	//查詢條件展開隱藏
+	jQuery(function(){
+	  $(".title").click(function(){$("#search_condition").slideToggle("slow");});
+	});
+</script>
+<script src="views/search/js/result.js?t=1765635158"></script>
+
+<div id="search">
+            <div>
+            <p class="title">您設定的查詢條件   ▼</p>
+            <div id='search_condition' style='display:none;'>
+	            <p class="title">
+	            地區別：外島<br>	        </div>
+        </div>
+                    <p class="text-center" style="margin-top: 10px;">
+                <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+            </p>
+                <div style="margin: 20px 0px;">
+                            <form id="search-form" action="./index.php?c=search&m=detail" method="post" target="_blank">
+                    <div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="0"
+                                    ><span class="span-search">153-國立金門大學</span></button><div class="div-school" id="div-0"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15301"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">應用英語學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15302"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">運動與休閒學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15303"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">企業管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15304"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15305"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">食品科學系(A組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15314"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">食品科學系(B組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15306"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">土木與工程管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15307"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">觀光管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15308"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15309"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">建築學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15310"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">國際暨大陸事務學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15311"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">華語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15312"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">海洋與邊境管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15313"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">工業工程與管理學系(管理科學組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15315"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">工業工程與管理學系(智慧製造組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15322"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">都市計畫與景觀學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15323"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">社會工作學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15324"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">長期照護學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15325"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">護理學系(A組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15326"
+                                            ><span class="span-search">國立金門大學</span><br><span class="span-search">護理學系(B組)</span></button></div></div>                    <!--<input type="hidden" name="syear" value="">-->
+
+                    <input type="hidden" name="dep_id" value="0">
+                </form>
+                    </div>
+        <p class="text-center">
+        <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+    </p>
+</div>
+    </div>
+
+    <footer id="footer">
+        <div id="gotop"><center>Top</center></div> 
+
+        <div class="div-copyright text-center">
+            © 2025 UAC
+        </div>
+    </footer>
+</body>
+</html>

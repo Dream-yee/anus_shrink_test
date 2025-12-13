@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name=description content="115學年度校系分則查詢系統">
+    <meta name="keywords" content="">
+        <title>115學年度校系分則查詢系統</title>
+
+	<!--<link href="js/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />-->
+	 
+	<!--<script src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js" type="text/javascript"></script>-->	
+    <!--<script src="bootstrap/js/jquery_1.11.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>       
+    <link href="js/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href=bootstrap/css/bootstrap_ncku.css rel=stylesheet>
+    <link href=bootstrap/css/bootstrap_ncku_1.css rel=stylesheet>
+    <link href=bootstrap/css/responsive.css rel=stylesheet>
+        <!-- <link href=bootstrap/css/bootstrap-theme_ncku.css rel=stylesheet> -->
+    <!--<script src=bootstrap/js/bootstrap.js></script>-->
+    <script src=bootstrap-5.3.3-dist/js/bootstrap.min.js></script>
+
+    <link rel="icon" href="images/favicon.ico">   
+
+    <style type="text/css">
+        body {
+            background: none; 
+            background-color: #d9edf7 
+        }
+
+        .container {
+            min-width: 407px;
+        }
+
+        /*@media (min-width: 992px) {
+            .container {
+                margin-top: 20px;
+            }
+        }*/
+
+        @media (min-width: 992px) {
+            #div-org {
+                min-width: 407px;
+            }
+        }
+
+        #search .title {
+           color: #337ab7; 
+           font-weight: 700;
+        }
+
+        #gotop {
+            display: none;
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            font-size: 18px;
+            background: #33b5e5;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            line-height: 50px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .div-copyright {
+            bottom: 0;
+        }
+
+        #footer {
+            padding: 10px 0px;
+        }
+
+        #h2-org {
+            margin-bottom: 0px; 
+            color: #13aad7; 
+            font-weight: bold; 
+            font-size: 26px;
+        }
+
+        #text-org {
+            font-size: 10px; 
+            color: #757575; 
+            font-weight: 100;
+        }
+
+        #h2-uac {
+            margin-top: 5px;
+        }
+    </style>
+
+    <script type='text/javascript'>
+        
+        $(document).ready(function(){
+            $(function(){
+                $('#gotop').click(function(){
+                    jQuery('html,body').animate({
+                        scrollTop:0
+                    },500);
+                });
+                $(window).scroll(function() {
+                    
+                    if ( $(this).scrollTop() > 100){
+                        $('#gotop').fadeIn('fast');
+                    } else {
+                        $('#gotop').stop().fadeOut('fast');
+                    }
+                });
+            });
+                    
+        });
+    </script>
+	<!-- google分析 -->
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+		<!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX"></script>-->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-HM8BXQY9HX" integrity="sha256-u2nNNkss3diJbM6PEKRKHYIWXeTz4NtkADmC9VHwmsE=" crossorigin="anonymous"></script>
+	
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		
+		  gtag('config', 'G-HM8BXQY9HX');
+		</script>
+	
+
+</head>
+<body>
+        <div class="text-center" id="div-org">
+        <h2 id="h2-org">大學考試入學分發委員會</h2>
+        <!--<span id="text-org">UAC</span>-->
+        <h2 id="h2-uac"><b>115學年度校系分則查詢系統</b></h2>
+        <!--<span>查詢人次：人次</span><br>--></br>
+        <span>本查詢系統結果僅供參考，若與簡章內容不符，概以正式簡章為準</span>
+    </div> 
+    
+    <div class="container">
+        <style type="text/css">
+    #search {
+        background-color: #d9edf7;
+        padding: 5px;
+        border-top: 1px solid #cdcdcd; 
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: 30px;
+    }
+
+    @media (min-width: 992px) {
+        .div-search {
+            margin-bottom: 5px;
+        }
+    }
+
+    .btn-school,
+    .btn-detail {
+        width: 100%;
+        text-align: left;
+    }
+
+    .span-search {
+        /*padding-left: 15%;*/
+    }
+    .title:hover{
+    	cursor: pointer;
+    }
+</style>
+<script>
+	//查詢條件展開隱藏
+	jQuery(function(){
+	  $(".title").click(function(){$("#search_condition").slideToggle("slow");});
+	});
+</script>
+<script src="views/search/js/result.js?t=1765635149"></script>
+
+<div id="search">
+            <div>
+            <p class="title">您設定的查詢條件   ▼</p>
+            <div id='search_condition' style='display:none;'>
+	            <p class="title">
+	            地區別：宜蘭花蓮臺東<br>	        </div>
+        </div>
+                    <p class="text-center" style="margin-top: 10px;">
+                <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+            </p>
+                <div style="margin: 20px 0px;">
+                            <form id="search-form" action="./index.php?c=search&m=detail" method="post" target="_blank">
+                    <div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="0"
+                                    ><span class="span-search">034-國立東華大學</span></button><div class="div-school" id="div-0"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03415"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">應用數學系數學科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03409"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">應用數學系統計科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03406"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">物理學系物理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03434"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">物理學系奈米與光電科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03405"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03416"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">生化暨分子醫學科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03417"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">資訊工程學系資工組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03446"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">資訊工程學系國際組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03418"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">電機工程學系智慧系統組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03442"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">電機工程學系半導體組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03410"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">材料科學與工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03431"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">光電工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03450"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">理工學院大數據科學國際學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03403"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">企業管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03413"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">會計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03404"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03419"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">國際企業學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03414"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">財務金融學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03402"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">觀光暨休閒遊憩學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03439"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">管理學院管理科學與財金國際學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03449"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">管理學院會計與資訊管理國際學士班智慧會計與風險管理組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03448"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">管理學院會計與資訊管理國際學士班會計資訊與電腦稽核組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03451"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">管理學院數位行銷與服務創新國際學士班</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03407"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">華文文學與創作學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03423"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">中國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03401"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">英美語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03432"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">臺灣文化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03408"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">歷史學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03411"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">經濟學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03412"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">諮商與臨床心理學系(自然組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03447"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">諮商與臨床心理學系(社會組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03424"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">社會學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03437"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">公共行政學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03438"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">法律學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03430"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">體育與運動科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03422"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">教育與潛能開發學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03433"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">教育行政與管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03427"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">特殊教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03425"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">幼兒教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03435"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">族群關係與文化學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03436"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">民族語言與傳播學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03428"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">民族發展與社會工作學系民族發展組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03445"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">民族發展與社會工作學系社會工作組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03441"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">原住民族樂舞與藝術學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03420"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">自然資源與環境學系環境管理與環境教育組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03443"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">自然資源與環境學系生態與保育組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03444"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">自然資源與環境學系地球科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03440"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">縱谷跨域書院學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03421"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">音樂學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03426"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">藝術與設計學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03429"
+                                            ><span class="span-search">國立東華大學</span><br><span class="span-search">藝術創意產業學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="1"
+                                    ><span class="span-search">038-國立臺東大學</span></button><div class="div-school" id="div-1"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03820"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">全校不分系學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03802"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03806"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">體育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03801"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">幼兒教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03808"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">特殊教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03804"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">文化資源與休閒產業學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03818"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">數位媒體與文教產業學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03817"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">公共與文化事務學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03803"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">身心整合與運動休閒產業學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03813"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">英美語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03814"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">華語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03807"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">美術產業學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03809"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">音樂學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03815"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">生命科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03811"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03812"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">資訊管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03805"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">應用數學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03810"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">應用科學系化學及奈米科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03816"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">應用科學系物理暨光電科學組</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03819"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">綠能與資訊科技學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="03823"
+                                            ><span class="span-search">國立臺東大學</span><br><span class="span-search">護理學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="2"
+                                    ><span class="span-search">108-慈濟大學</span></button><div class="div-school" id="div-2"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10811"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">醫學系(自費)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10808"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">醫學系(公費)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10818"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">藥學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10810"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">醫學檢驗生物技術學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10816"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">物理治療學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10809"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">公共衛生學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10812"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">分子生物暨人類遺傳學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10819"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">醫學影像暨放射科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10801"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">護理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10817"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">資訊工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10802"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">生物醫學暨工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10804"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">傳播學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10807"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">兒童發展與家庭教育學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10806"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">社會工作學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10803"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">人類發展與心理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10814"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">外語暨新興科技應用學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10821"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">資訊科技與管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10822"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">醫務暨健康管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="10820"
+                                            ><span class="span-search">慈濟大學</span><br><span class="span-search">經營管理學系</span></button></div></div></div><div class="row div-search"><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="3"
+                                    ><span class="span-search">130-佛光大學</span></button><div class="div-school" id="div-3"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13006"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">建築環境設計學士學位學程(社會組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13027"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">建築環境設計學士學位學程(自然組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13015"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">傳播學系(數位媒體與智能創作組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13003"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">傳播學系(廣告公關與精準行銷組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13021"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">傳播學系(流行音樂傳播與策展組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13019"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">資訊應用學系(資訊系統開發組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13012"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">資訊應用學系(動畫與視覺特效組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13008"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">資訊應用學系(數位遊戲開發組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13026"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">人工智慧技術與應用學士學位學程</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13016"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">語文學系(應用英日語組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13020"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">語文學系(應用英韓語組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13025"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">歷史學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13009"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">社會工作學系(兒少家庭社工組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13022"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">社會工作學系(醫務心衛社工組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13013"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">心理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13005"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">公共行政與國際事務學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13004"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">應用經濟學系(財務金融組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13023"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">應用經濟學系(國際商務組)</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="13018"
+                                            ><span class="span-search">佛光大學</span><br><span class="span-search">健康與創意蔬食產業學系</span></button></div></div><div class="col-md-4"><button 
+                                        class="btn btn-default btn-school" 
+                                        type="button" 
+                                        data-sid="4"
+                                    ><span class="span-search">150-國立宜蘭大學</span></button><div class="div-school" id="div-4"><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15001"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">外國語文學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15002"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">應用經濟與管理學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15016"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">休閒產業與健康促進學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15003"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">土木工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15004"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">機械與機電工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15005"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">化學工程與材料工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15006"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">環境工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15009"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">生物機電工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15010"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">食品科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15011"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">生物技術與動物科學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15012"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">森林暨自然資源學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15013"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">園藝學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15007"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">電機工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15008"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">電子工程學系</span></button><button 
+                                                class="btn btn-default btn-detail" 
+                                                type="button"
+                                                data-eid="15014"
+                                            ><span class="span-search">國立宜蘭大學</span><br><span class="span-search">資訊工程學系</span></button></div></div>                    <!--<input type="hidden" name="syear" value="">-->
+
+                    <input type="hidden" name="dep_id" value="0">
+                </form>
+                    </div>
+        <p class="text-center">
+        <a class="btn btn-primary" href="./index.php?c=search&m=index" role="button">重新查詢</a>
+    </p>
+</div>
+    </div>
+
+    <footer id="footer">
+        <div id="gotop"><center>Top</center></div> 
+
+        <div class="div-copyright text-center">
+            © 2025 UAC
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,5 +1,6 @@
 // 變數宣告
 let schoolData = {};
+let regionData = {};
 let newStandards = {};
 const universitySelect = document.getElementById('university-select');
 const departmentSelect = document.getElementById('department-select');
@@ -12,13 +13,18 @@ const resultsDiv = document.querySelector('.results');
 async function loadData() {
     try {
         // 載入 data.json 檔案
-        const response1 = await fetch('datas/historical_result.json');
+        const response = await fetch('datas/historical_result.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        schoolData = await response.json();
+        console.log(schoolData);
+        
+        const response1 = await fetch('datas/schools_by_region.json'); // 🚨 請確認路徑是否正確
         if (!response1.ok) {
             throw new Error(`HTTP error! status: ${response1.status}`);
         }
-        schoolData = await response1.json();
-        console.log(schoolData);
-        
+        regionData = await response1.json();
         
         // 初始化大學選單
         populateUniversities();
@@ -34,21 +40,88 @@ async function loadData() {
 // -----------------------------------------------------
 // 2. 填充選單
 // -----------------------------------------------------
-function populateUniversities() {
-    // ... (保持原有的載入學校邏輯) ...
-    const universities = Object.keys(schoolData);
-    universitySelect.innerHTML = '<option value="">-- 請選擇學校 --</option>'; // 清空並添加預設選項
+function populateUniversities() {const universities = Object.keys(schoolData);
+    universitySelect.innerHTML = '<option value="">-- 請選擇學校 --</option>'; 
+
+    // 1. 定義您的自定義區域順序
+    const customRegionOrder = [
+        "北北基", 
+        "桃竹苗", 
+        "中彰投", 
+        "嘉南", 
+        "高屏", 
+        "宜花東", 
+        "外島"
+    ];
+    
+    const defaultRegion = "其他/未分類"; 
+
+    // 2. 按區域分組學校
+    const groupedSchools = {}; 
+    
     universities.forEach(uni => {
-        const option = document.createElement('option');
-        option.value = uni;
-        option.textContent = uni;
-        universitySelect.appendChild(option);
+        const region = regionData[uni] || defaultRegion;
+        
+        if (!groupedSchools[region]) {
+            groupedSchools[region] = [];
+        }
+        groupedSchools[region].push(uni);
     });
     
-    // 初始載入第一個學校（如果有的話）
-    if (universities.length > 0) {
-        universitySelect.value = universities[0];
-        populateDepartments(universities[0]);
+    
+    // 3. 確定最終的迭代順序
+    let finalRegionOrder = [];
+    let remainingRegions = []; // 儲存不在 customRegionOrder 裡的區域 (如 '其他/未分類')
+    
+    // a. 先按照 customRegionOrder 加入已定義的區域
+    customRegionOrder.forEach(regionName => {
+        if (groupedSchools[regionName]) {
+            finalRegionOrder.push(regionName);
+        }
+    });
+    
+    // b. 將剩下的區域 (包含 '其他/未分類') 加入到列表的末尾
+    Object.keys(groupedSchools).forEach(regionName => {
+        if (!customRegionOrder.includes(regionName)) {
+            remainingRegions.push(regionName);
+        }
+    });
+    
+    // 將剩下的區域（按字母排序）添加到隊列末尾
+    remainingRegions.sort(); 
+    finalRegionOrder = finalRegionOrder.concat(remainingRegions);
+
+
+    // 4. 迭代分組並創建 <optgroup> (使用 finalRegionOrder)
+    finalRegionOrder.forEach(region => {
+        const schoolsInRegion = groupedSchools[region];
+        
+        // 創建 <optgroup label="區域名稱">
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = region;
+
+        // 對區域內的學校名稱進行排序（例如按筆劃或字母，確保區內順序整齊）
+        
+        schoolsInRegion.forEach(uni => {
+            const option = document.createElement('option');
+            option.value = uni;
+            option.textContent = uni;
+            optgroup.appendChild(option);
+        });
+        
+        // 將完整的 optgroup 加入到 select 中
+        universitySelect.appendChild(optgroup);
+    });
+
+    // 5. 初始載入第一個學校 (可選，保持載入第一個分組的第一個學校)
+    if (universities.length > 0 && finalRegionOrder.length > 0) {
+        const firstRegion = finalRegionOrder[0];
+        const firstUniversity = groupedSchools[firstRegion][0];
+        
+        if (firstUniversity) {
+            universitySelect.value = firstUniversity;
+            populateDepartments(firstUniversity);
+        }
     }
 }
 
