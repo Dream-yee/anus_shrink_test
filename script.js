@@ -154,7 +154,7 @@ function populateDepartments(selectedUniversity) {
         
         // 🌟 自動選擇第一個科系並顯示結果 (這是您要保留的行為)
         if (departments.length > 0) {
-            departmentSelect.value = (dept_param && departments[dept_param]) ? departments[dept_param] : departments[0];
+            departmentSelect.value = (dept_param && schoolData[selectedUniversity][dept_param]) ? dept_param : departments[0];
             // 🌟 立即觸發結果顯示
             displayResults(); 
         } else {
