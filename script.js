@@ -4,6 +4,7 @@ let regionData = {};
 let newStandards = {};
 const universitySelect = document.getElementById('university-select');
 const departmentSelect = document.getElementById('department-select');
+const resultsDisplay = document.getElementById('results-display');
 const resultsDiv = document.querySelector('.results');
 
 // -----------------------------------------------------
@@ -158,7 +159,7 @@ function populateDepartments(selectedUniversity) {
         if (departments.length > 0) {
             departmentSelect.value = (dept_param && schoolData[selectedUniversity][dept_param]) ? dept_param : departments[0];
             // 🌟 立即觸發結果顯示
-            displayResults(); 
+            displayResults();
         } else {
             // 如果學校有選單但沒有科系
             resultsDiv.innerHTML = `<h2>${selectedUniversity}</h2><p class="no-data">該學校無科系資料可供查詢。</p>`;
@@ -172,6 +173,36 @@ function populateDepartments(selectedUniversity) {
 // -----------------------------------------------------
 // 3. 顯示結果
 // -----------------------------------------------------
+
+/**
+ * fancy
+ */
+function displayAnimation(callback, params) {
+// 1. 應用離開動畫 (Animate Out)
+    // resultsDisplay.classList.add('animate-out');
+
+    // 設置一個短暫的延遲（例如 300 毫秒），等待 'animate-out' 完成
+    setTimeout(() => {
+        // 2. 清除舊數據並更新新內容
+        
+        // 🚨 這裡應替換為您實際更新 resultsDisplay 內容的邏輯
+        // 假設這個函數是您更新 HTML 內容的地方：
+        callback.apply(this, params);
+        
+        // 確保移除離開動畫的類別
+        // resultsDisplay.classList.remove('animate-out');
+        
+        // 3. 應用進入動畫 (Animate In)
+        resultsDisplay.classList.add('animate-in');
+
+        // 4. 清除動畫類別（動畫完成後），以便下次能再次觸發
+        // 這裡等待 500 毫秒 (與 CSS 中的動畫時長一致)
+        setTimeout(() => {
+            resultsDisplay.classList.remove('animate-in');
+        }, 100);
+
+    }, 100); // 300ms 延遲讓淡出動畫有時間完成
+}
 
 /**
  * 根據極簡主義風格，渲染單一科系的歷年數據。
@@ -425,7 +456,7 @@ function displaySuggestions(results) {
             url.searchParams.set("school", item.uni);
             url.searchParams.set("dept", item.dept);
             history.pushState({}, "", url);
-            populateDepartments(item.uni);
+            displayAnimation(populateDepartments, [item.uni]);
             closeSpotlight();
         });
 

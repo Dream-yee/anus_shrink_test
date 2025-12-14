@@ -487,3 +487,38 @@ body.dark-mode .suggestion-item.active {
     background-color: #3e3e3e; 
     color: #f0f0f0;
 }
+
+/* ======================================================= */
+/* 9. 結果顯示動畫樣式 */
+/* ======================================================= */
+
+/* 確保 results-display 容器存在 */
+#results-display {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out; /* 讓內容在移除時平滑過渡 */
+}
+
+/* 數據進入動畫 (Fade-in and Slide-down) */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px); /* 從上方 20px 處滑入 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 應用動畫的 Class */
+.animate-in {
+    animation: fadeInSlide 0.1s ease-out forwards;
+}
+
+/* 數據離開動畫 (可選，但推薦) */
+.animate-out {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+}
