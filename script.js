@@ -115,12 +115,20 @@ function populateUniversities() {const universities = Object.keys(schoolData);
 
     // 5. 初始載入第一個學校 (可選，保持載入第一個分組的第一個學校)
     if (universities.length > 0 && finalRegionOrder.length > 0) {
-        const firstRegion = finalRegionOrder[0];
-        const firstUniversity = groupedSchools[firstRegion][0];
-        
-        if (firstUniversity) {
-            universitySelect.value = firstUniversity;
-            populateDepartments(firstUniversity);
+        let params = new URLSearchParams(document.location.search);
+        let school = params.get("school");
+
+        if(!school || !schoolData[school]) {
+            const firstRegion = finalRegionOrder[0];
+            const firstUniversity = groupedSchools[firstRegion][0];
+            
+            if (firstUniversity) {
+                universitySelect.value = firstUniversity;
+                populateDepartments(firstUniversity);
+            }
+        } else {
+            universitySelect.value = school;
+            populateDepartments(school);
         }
     }
 }
@@ -130,6 +138,9 @@ function populateDepartments(selectedUniversity) {
     departmentSelect.innerHTML = '<option value="">-- 請選擇科系 --</option>';
     departmentSelect.disabled = true;
     // ⚠️ 移除這行，避免在選擇過程中閃爍提示：resultsDiv.innerHTML = `<p class="initial-prompt">請選擇校系以查詢資料。</p>`;
+
+    let params = new URLSearchParams(document.location.search);
+    let dept_param = params.get("dept");
 
     if (selectedUniversity && schoolData[selectedUniversity]) {
         const departments = Object.keys(schoolData[selectedUniversity]);
@@ -143,7 +154,7 @@ function populateDepartments(selectedUniversity) {
         
         // 🌟 自動選擇第一個科系並顯示結果 (這是您要保留的行為)
         if (departments.length > 0) {
-            departmentSelect.value = departments[0];
+            departmentSelect.value = (dept_param && departments[dept_param]) ? departments[dept_param] : departments[0];
             // 🌟 立即觸發結果顯示
             displayResults(); 
         } else {
@@ -168,6 +179,12 @@ function displayResults() {
     // 假設 universitySelect, departmentSelect, schoolData, resultsDiv 已經在全局或父作用域中定義
     const uni = universitySelect.value;
     const dept = departmentSelect.value;
+
+
+    const url = new URL(window.location);
+    url.searchParams.set("school", uni);
+    url.searchParams.set("dept", dept);
+    history.pushState({}, "", url);
 
     if (!uni || !dept) {
         resultsDiv.innerHTML = `<p class="initial-prompt">請選擇校系以查詢資料。</p>`;
