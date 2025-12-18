@@ -363,15 +363,13 @@ const SCHOOL_ALIASES = {
 };
 
 const DEPT_ALIASES = {
-    "資工": ["資訊", "工程"],
+    "資工": ["資訊工程"],
+    "化工": ["化學工程"],
     "電資": ["電機", "資訊"],
     "企管": ["企業", "管理"],
     "中文": ["中國文學"],
     "外文": ["外國語文"],
     "財金": ["財務", "金融"],
-    "電機": ["電機", "工程"],
-    "機械": ["機械", "工程"],
-    "土木": ["土木", "工程"],
     "法律": ["法律"],
     "醫學": ["醫學系"],
     "物治": ["物理", "治療"],
@@ -544,9 +542,6 @@ if (searchIconButton) {
  */
 function openSpotlight() {
     spotlightOverlay.style.display = 'flex';
-    spotlightOverlay.addEventListener('click', () => {
-        closeSpotlight();
-    })
     spotlightInput.focus();
     spotlightInput.value = '';
     spotlightSuggestions.innerHTML = '';
@@ -572,16 +567,28 @@ document.addEventListener('keydown', (e) => {
             openSpotlight();
         }
     }
-    
-    // Esc 鍵關閉
-    if (e.key === 'Escape' && spotlightOverlay.style.display === 'flex') {
-        closeSpotlight();
-    }
 });
+
+let mouseOnSpotlight = false
+
+spotlightOverlay.addEventListener('click', (e) => {
+    if(!mouseOnSpotlight) {
+        closeSpotlight();
+        mouseOnSpotlight = false;
+    }
+})
 
 // 輸入框內容變更時即時搜尋
 spotlightInput.addEventListener('input', (e) => {
     searchDepartments(e.target.value);
+});
+
+spotlightInput.addEventListener('mouseover', (e) => {
+    mouseOnSpotlight = true;
+});
+
+spotlightInput.addEventListener('mouseout', (e) => {
+    mouseOnSpotlight = false;
 });
 
 // -----------------------------------------------------
