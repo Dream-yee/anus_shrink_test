@@ -346,6 +346,40 @@ const spotlightSuggestions = document.getElementById('spotlight-suggestions');
 
 let flattenedSchoolData = []; // 扁平化後的 [{uni: '...', dept: '...'}] 結構
 
+// --- 1. 定義別名對照表 ---
+const SCHOOL_ALIASES = {
+    "台大": "國立臺灣大學", "臺大": "國立臺灣大學", "ntu": "國立臺灣大學",
+    "成大": "國立成功大學", "ncku": "國立成功大學",
+    "清大": "國立清華大學", "nthu": "國立清華大學",
+    "交大": "國立陽明交通大學", "陽明交大": "國立陽明交通大學", "nycu": "國立陽明交通大學",
+    "政大": "國立政治大學", "nccu": "國立政治大學",
+    "中大": "國立中央大學", "中央": "國立中央大學", "ncu": "國立中央大學",
+    "中山": "國立中山大學", "nsysu": "國立中山大學",
+    "中興": "國立中興大學", "興大": "國立中興大學", "nchu": "國立中興大學",
+    "中正": "國立中正大學", "ccu": "國立中正大學",
+    "台師大": "國立臺灣師範大學", "臺師大": "國立臺灣師範大學", "師大": "國立臺灣師範大學", "ntnu": "國立臺灣師範大學",
+    "彰師大": "國立彰化師範大學", "彰師": "國立彰化師範大學",
+    "高師大": "國立高雄師範大學", "高師": "國立高雄師範大學",
+};
+
+const DEPT_ALIASES = {
+    "資工": ["資訊", "工程"],
+    "電資": ["電機", "資訊"],
+    "企管": ["企業", "管理"],
+    "中文": ["中國文學"],
+    "外文": ["外國語文"],
+    "財金": ["財務", "金融"],
+    "電機": ["電機", "工程"],
+    "機械": ["機械", "工程"],
+    "土木": ["土木", "工程"],
+    "法律": ["法律"],
+    "醫學": ["醫學系"],
+    "物治": ["物理", "治療"],
+    "職治": ["職能", "治療"],
+    "牙醫": ["牙醫學"],
+    "心理": ["心理學"]
+};
+
 /**
  * 1. 扁平化數據：將巢狀的 schoolData 轉為單一陣列，方便搜尋。
  * @param {Object} data - historical_result.json 內容
@@ -376,57 +410,82 @@ function searchDepartments(query) {
         return;
     }
 
-    // 將查詢拆分為多個關鍵字 (以空格分隔)
     const keywords = trimmedQuery.toLowerCase().split(/\s+/).filter(k => k.length > 0);
-
     const results = [];
     
-    // 遍歷扁平化數據進行匹配
     flattenedSchoolData.forEach(item => {
         const uniLower = item.uni.toLowerCase();
         const deptLower = item.dept.toLowerCase();
-        const fullText = (uniLower + deptLower).toLowerCase(); // 學校+科系完整字串
+        const fullText = (uniLower + deptLower).toLowerCase();
 
-        let score = 0; // 用於分級
+        let score = 0;
 
-        // 計算分數：分數越高，匹配度越高
+        // --- 核心匹配邏輯 ---
 
-        // A. 嚴格符合 (最高分: 100+)
-        // 1. 科系名稱完全包含所有關鍵字 (AND 條件)
-        const allKeywordsInDept = keywords.every(k => deptLower.includes(k));
-        if (allKeywordsInDept) {
-             // 額外分數：如果第一個關鍵字出現在開頭，分數更高
-            score += 100; 
-            if (deptLower.startsWith(keywords[0])) score += 20;
-        }
+        // 1. 檢查每個關鍵字
+        const keywordMatches = keywords.map(k => {
+            let matchType = null; // null, 'partial', 'alias', 'exact'
 
-        // B. 寬鬆符合 (中等分: 50+)
-        // 2. 學校名稱 + 科系名稱 包含所有關鍵字 (AND 條件)
-        const allKeywordsInFullText = keywords.every(k => fullText.includes(k));
-        if (allKeywordsInFullText && score < 100) {
+            // A. 直接包含
+            if (fullText.includes(k)) {
+                matchType = 'partial';
+            }
+
+            // B. 學校別名檢查 (例如輸入 "台大")
+            if (SCHOOL_ALIASES[k] && uniLower.includes(SCHOOL_ALIASES[k])) {
+                matchType = 'alias';
+            }
+
+            // C. 科系別名檢查 (例如輸入 "資工")
+            if (DEPT_ALIASES[k]) {
+                const requirements = DEPT_ALIASES[k];
+                // 如果科系名稱包含了縮寫所代表的所有字元
+                if (requirements.every(req => deptLower.includes(req))) {
+                    matchType = 'alias';
+                }
+            }
+
+            return matchType;
+        });
+
+        // --- 計分系統 ---
+
+        // 如果所有關鍵字都有匹配到 (不論是直接匹配還是別名)
+        if (keywordMatches.every(m => m !== null)) {
+            
+            // 基礎分：所有關鍵字都符合 (AND 條件)
             score += 50;
-        }
-        
-        // C. 部分符合 (低分: 10+)
-        // 3. 學校或科系名稱包含任一關鍵字 (OR 條件)
-        const anyKeywordMatch = keywords.some(k => deptLower.includes(k) || uniLower.includes(k));
-        if (anyKeywordMatch && score < 50) {
+
+            // 獎勵：如果在科系名稱內完全符合所有關鍵字
+            const allInDept = keywords.every(k => {
+                const isAliasMatch = DEPT_ALIASES[k] && DEPT_ALIASES[k].every(req => deptLower.includes(req));
+                return deptLower.includes(k) || isAliasMatch;
+            });
+            if (allInDept) score += 50;
+
+            // 獎勵：完全匹配別名 (給予跟直接符合差不多的高分)
+            if (keywordMatches.includes('alias')) score += 30;
+
+            // 獎勵：字串開頭符合
+            if (deptLower.startsWith(keywords[0]) || uniLower.startsWith(keywords[0])) {
+                score += 20;
+            }
+        } 
+        // 寬鬆搜尋：如果只有部分關鍵字符合 (OR 條件)
+        else if (keywords.some((k, idx) => keywordMatches[idx] !== null)) {
             score += 10;
         }
-        
-        // 4. 科系名稱的縮寫匹配 (例如: '中文系' 匹配 '中國文學系')
-        // 這裡可以加入更複雜的縮寫邏輯，但暫時只用包含判斷。
 
         if (score > 0) {
             results.push({ item, score });
         }
     });
 
-    // 3. 排序結果：依分數由高到低
+    // 3. 排序結果
     results.sort((a, b) => b.score - a.score);
 
     // 4. 顯示建議
-    displaySuggestions(results.slice(0, 200)); // 只顯示前 200 個結果
+    displaySuggestions(results.slice(0, 200));
 }
 
 
@@ -505,7 +564,7 @@ function closeSpotlight() {
  */
 document.addEventListener('keydown', (e) => {
     // 檢查是否是 F 鍵 (不論大小寫)
-    if (e.key === 'f' || e.key === 'F') {
+    if (e.key === 's' || e.key === 'S' || e.key === 'ㄋ') {
         // 避免在 input 欄位中按 F 時重複觸發
         const activeElement = document.activeElement.tagName;
         if (activeElement !== 'INPUT' && activeElement !== 'TEXTAREA') {
