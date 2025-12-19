@@ -464,7 +464,7 @@ function searchDepartments(query) {
         // --- 計分系統 ---
 
         // 如果所有關鍵字都有匹配到 (不論是直接匹配還是別名)
-        if (keywordMatches.every(m => m !== null)) {
+        if (keywordMatches.every(m => m !== null) && (main_unis.length === 0 || main_unis.includes(uniLower))) {
             
             // 基礎分：所有關鍵字都符合 (AND 條件)
             if(keywordMatches.length !== 0)
@@ -476,12 +476,6 @@ function searchDepartments(query) {
                 return deptLower.includes(k) || isAliasMatch;
             });
             if (allInDept) score += 50;
-
-
-            if (main_unis.includes(uniLower)){
-                score += 50;
-            }
-
 
             // 對鎖定校系的匹配
             if (main_unis.includes(uniLower)){
@@ -574,8 +568,8 @@ if (searchIconButton) {
 function openSpotlight() {
     spotlightOverlay.style.display = 'flex';
     spotlightInput.focus();
-    spotlightInput.value = '';
-    spotlightSuggestions.innerHTML = '';
+    // spotlightInput.value = '';
+    // spotlightSuggestions.innerHTML = '';
     document.body.style.overflow = 'hidden'; // 鎖定背景捲動
 }
 
