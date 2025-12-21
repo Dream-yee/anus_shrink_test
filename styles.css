@@ -438,8 +438,8 @@ h5 {
 /* 建議項目樣式 */
 .suggestion-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+    /* align-items: center; */
     padding: 10px 20px;
     cursor: pointer;
     border-top: 1px solid #eeeeee;
@@ -458,8 +458,13 @@ h5 {
 }
 
 .suggestion-item .uni-name {
-    color: #666;
-    font-size: 13px;
+    color: #cacaca;
+    font-weight: 400;
+}
+
+.suggestion-item .uni-name-first {
+    color: #565656;
+    font-weight: 500;
 }
 
 /* --- 黑夜模式適配 --- */
