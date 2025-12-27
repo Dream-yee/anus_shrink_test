@@ -3,7 +3,7 @@ from tools.score_distribution_csv_2_json import convert_score_distribution
 from tools.match_groups import match_them
 import json
 
-YEAR = 112
+YEAR = 114
 
 def main():
     dept_cri = convert_division_exam_data(f"datas/{YEAR}/dept_criteria.csv")

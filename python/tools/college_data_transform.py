@@ -126,6 +126,7 @@ def convert_division_exam_data(csv_filepath):
                 department_data: Dict[str, Any] = {
                     "科目倍數": subject_multipliers,
                     "錄取人數": admitted_count,
+                    "一般考生錄取標準總分": standard_general, 
                     # 替換為計算後的平均分數
                     "一般考生錄取標準": new_general_average, 
                 }

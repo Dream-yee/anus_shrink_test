@@ -277,6 +277,8 @@ function displayResults() {
         `;
     }
 
+    // 學測分數
+    let GSATScores = getGSATScore();
 
     // --- 3. 渲染歷史年份 (Historical Years) 的數據 ---
     
@@ -657,8 +659,8 @@ function toggleScoreIsland() {
 scoreInputs.forEach((input, index) => {
     input.addEventListener('input', (e) => {
         const value = e.target.value;
-        
-        // 如果輸入超過 15 (級分上限)，自動修正為 15
+
+        // 如果輸入超過 60 (級分上限)，自動修正為 60
         if (parseInt(value) > 60) {
             e.target.value = "60";
         }
@@ -700,6 +702,17 @@ document.addEventListener('keydown', (e) => {
 document.getElementById('island-close-btn').addEventListener('click', () => {
     scoreIsland.classList.remove('island-visible');
 });
+
+function getGSATScore() {
+    return {
+        "國文": scoreInputs[0].value,
+        "英文": scoreInputs[1].value,
+        "數A": scoreInputs[2].value,
+        "數B": scoreInputs[3].value,
+        "自然": scoreInputs[4].value,
+        "社會": scoreInputs[5].value,
+    }
+}
 
 // -----------------------------------------------------
 // 4. 事件監聽器
