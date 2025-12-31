@@ -804,3 +804,82 @@ body.dark-mode .input-unit input {
     color: #fff;
     border-color: rgba(255,255,255,0.1);
 }
+
+/* ======================================================= */
+/* 14. 左撇子模式鏡像邏輯 */
+/* ======================================================= */
+
+/* 左側感應區樣式 */
+#left-hand-trigger {
+    position: fixed;
+    top: 65%;
+    left: 0;
+    width: 20px; /* 平時很窄 */
+    height: 40%;
+    z-index: 4000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: width 0.3s;
+    visibility: hidden;
+}
+
+#left-hand-trigger:hover {
+    width: 40px; /* 游標靠近時稍微變寬，暗示可以點擊 */
+}
+
+.trigger-indicator {
+    width: 10px;
+    height: 150px;
+    background: rgba(76, 175, 80, 0.3); /* 淡淡的綠色線條提示 */
+    border-radius: 0 4px 4px 0;
+}
+
+/* --- 核心：左撇子模式下的元件位移 --- */
+
+/* 1. 懸浮按鈕 (FAB) 移到左邊 */
+.left-handed #fab-container {
+    right: auto;
+    left: 0px;
+}
+
+/* 2. GSAT Island 移到左邊 */
+.left-handed #score-island-container {
+    right: auto;
+    left: 0px;
+    transform: translateY(-50%) scale(0.8);
+}
+
+.left-handed #score-island-container.island-visible {
+    transform: translateY(-50%) scale(1);
+}
+
+/* 3. 修改手機版收納 (Tucked) 方向 */
+@media (max-width: 768px) {
+    /* GSAT Island 從左側縮進去 */
+    #left-hand-trigger {
+        visibility: visible;
+    }
+
+    .left-handed #score-island-container.tucked {
+        transform: translateY(-50%) translateX(calc(-100% + 30px)); /* 改為負向位移 */
+    }
+
+    .left-handed .score-island {
+        border-radius: 0 20px 20px 0; /* 圓角改到右邊 */
+    }
+
+    .left-handed #score-island-container.tucked::after {
+        left: auto;
+        right: 8px; /* 標籤文字移到右緣 */
+    }
+
+    /* FAB 從左側縮進去 */
+    .left-handed #fab-container.tucked {
+        transform: translateX(calc(-100% + 40px));
+    }
+
+    .left-handed .fab-button {
+        border-radius: 0 20px 20px 0;
+    }
+}

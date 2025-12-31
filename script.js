@@ -754,6 +754,16 @@ function getGSATScore() {
     }
 }
 
+const leftTrigger = document.getElementById('left-hand-trigger');
+
+if (leftTrigger) {
+    leftTrigger.addEventListener('click', () => {
+        // 切換左撇子類別
+        document.body.classList.toggle('left-handed');
+        leftTrigger.style.display = "none";
+    });
+}
+
 // -----------------------------------------------------
 // 4. 事件監聽器
 // -----------------------------------------------------
