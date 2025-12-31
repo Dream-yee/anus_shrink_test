@@ -662,7 +662,7 @@ body.dark-mode .suggestion-item.active {
 @media (max-width: 768px) {
     #score-island-container {
         /* 🌟 改為靠右側垂直置中 */
-        top: 45%;
+        top: 40%;
         right: 0px;
         left: auto;
         transform: translateY(-50%) scale(0.8);
@@ -718,7 +718,7 @@ body.dark-mode .suggestion-item.active {
 
 #fab-container {
     position: fixed;
-    bottom: 10%;
+    bottom: 70px;
     right: 0;
     display: flex;
     flex-direction: column; /* 垂直排列 */
