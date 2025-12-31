@@ -662,7 +662,7 @@ body.dark-mode .suggestion-item.active {
 @media (max-width: 768px) {
     #score-island-container {
         /* 🌟 改為靠右側垂直置中 */
-        top: 40%;
+        top: 45%;
         right: 0px;
         left: auto;
         transform: translateY(-50%) scale(0.8);
