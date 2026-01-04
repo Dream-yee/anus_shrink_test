@@ -1,0 +1,177 @@
+/* ======================================================= */
+/* 15. 校系對比頁面專屬樣式 */
+/* ======================================================= */
+
+#comparison-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* --- 搜尋區域的兩種狀態 --- */
+
+.search-section {
+    width: 100%;
+    max-width: 600px;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 100;
+}
+
+/* 初始狀態：在正中央 */
+#comparison-page.initial-state .search-section {
+    margin-top: 30vh;
+}
+
+/* 啟用狀態：移到上方 */
+#comparison-page.active-state .search-section {
+    margin-top: 20px;
+    max-width: 800px; /* 搜尋時拉寬一點 */
+}
+
+.search-input-wrapper {
+    position: relative;
+    background: white;
+    padding: 5px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+}
+
+.search-input-wrapper:focus-within {
+    border-color: #4CAF50;
+}
+
+#comparison-search {
+    width: 100%;
+    padding: 15px 25px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    border-radius: 50px;
+}
+
+/* --- 結果行樣式 --- */
+
+.results-container {
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+#comparison-page.active-state .results-container {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.comparison-row {
+    background: white;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 16px;
+    display: grid;
+    grid-template-columns: 250px 1fr; /* 左側校系，右側三年數據 */
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    animation: slideInUp 0.4s ease forwards;
+}
+
+.dept-info .uni-name { font-size: 12px; color: #888; }
+.dept-info .dept-name { font-size: 18px; font-weight: bold; display: block; }
+
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 112, 113, 114 */
+    gap: 10px;
+}
+
+.history-year-box {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* 修改 Comparison Row 佈局 */
+.comparison-row {
+    background: white;
+    margin-bottom: 20px;
+    padding: 25px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column; /* 手機端垂直，電腦端水平 */
+    gap: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+@media (min-width: 900px) {
+    .comparison-row {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .dept-info { width: 220px; flex-shrink: 0; }
+    .history-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+}
+
+/* 內容細節樣式 */
+.year-content {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.detail-section { margin-bottom: 8px; }
+.detail-section strong { color: #555; font-size: 11px; }
+
+/* 加權標籤 */
+.tag-container { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.tag-weight {
+    background: #f0f7f0;
+    color: #4CAF50;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    border: 1px solid #e0eee0;
+}
+
+/* 數據結果樣式 (往年) */
+.result-metrics {
+    display: flex;
+    justify-content: space-between;
+    background: #f8f9fa;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.metric-item { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.m-label { font-size: 9px; color: #999; text-transform: uppercase; }
+.m-value { font-size: 14px; font-weight: bold; color: #333; }
+
+/* 突出今年 */
+.highlight-year {
+    border: 1.5px solid #4CAF50;
+    background-color: #fff !important;
+}
+
+.gsat-std {
+    color: #2196F3;
+    font-weight: 500;
+}
+
+.year-label { font-size: 11px; color: #aaa; display: block; }
+.year-data { font-size: 14px; color: #333; font-weight: 500; }
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
