@@ -40,56 +40,62 @@ searchInput.addEventListener('input', (e) => {
 
 // --- 設定當前年份 ---
 const CURRENT_YEAR = 115;
-const TARGET_YEARS = [CURRENT_YEAR - 2, CURRENT_YEAR - 1, CURRENT_YEAR];
+const TARGET_YEARS = [CURRENT_YEAR - 3, CURRENT_YEAR - 2, CURRENT_YEAR - 1, CURRENT_YEAR];
 
-/**
- * 修正後的結果渲染邏輯
- */
 function renderComparisonResults(results) {
     resultsList.innerHTML = '';
-    console.log(results);
     
     results.slice(0, 200).forEach((res) => {
         const item = res.item;
         const row = document.createElement('div');
         row.classList.add('comparison-row');
-        
-        // 生成三年的 HTML
-        const yearsHtml = TARGET_YEARS.map(year => {
-            let yearData = schoolData[item.uni][item.dept][year];
-            
-            // 處理資料結構差異：往年通常是 Array [0]，今年 (115) 是 Object
-            let ydhtml;
-            console.log(yearData);
 
-            if (year === CURRENT_YEAR) {
-                ydhtml = formatYearDetails(yearData, year);
-            } else if (yearData !== undefined && yearData.length === 1) {
-                yearData = yearData[0]
-                ydhtml = formatYearDetails(yearData, year);
-            } else if (yearData !== undefined) {
-                ydhtml = "當年尚未合併"
-            } else {
-                ydhtml = "無資料"
-            }
-            
-            return `
-                <div class="history-year-box ${year === CURRENT_YEAR ? 'highlight-year' : ''}">
-                    <span class="year-label">${year} 學年度</span>
-                    <div class="year-content">
-                        ${ydhtml}
+        const currentData = schoolData[item.uni][item.dept][CURRENT_YEAR];
+        
+        // 準備 114, 113 的詳細輔助 HTML
+        const historyYears = TARGET_YEARS.filter(y => y !== CURRENT_YEAR);
+        const historyHtml = historyYears.map(year => {
+            let yearData = schoolData[item.uni][item.dept][year];
+            if (yearData !== undefined) {
+                const data = Array.isArray(yearData) ? yearData[0] : yearData;
+                
+                // 格式化往年的科目倍數（小標籤）
+                const weights = data.科目倍數 ? Object.entries(data.科目倍數)
+                    .map(([sub, w]) => `${sub} ${w}`).join(', ') : '無資料';
+                
+                return `
+                    <div class="history-block">
+                        <div class="h-top-line">
+                            <span class="h-year">${year}年</span>
+                            <span class="h-admitted">${data.錄取人數 || '--'}人</span>
+                            <span class="h-score">加權平均: ${data.一般考生錄取標準 || '--'} <small>(前${data.達標比例 || '--'}%)</small></span>
+                        </div>
+                        <div class="h-weights">${weights}</div>
                     </div>
-                </div>
-            `;
+                `;
+            }
+            return `<div class="history-block no-data">${year}年 無資料</div>`;
         }).join('');
 
         row.innerHTML = `
-            <div class="dept-info">
-                <span class="uni-name">${item.uni}</span>
-                <span class="dept-name">${item.dept}</span>
+            <div class="card-main">
+                <div class="dept-header">
+                    <div class="titles">
+                        <span class="uni-name">${item.uni}</span>
+                        <span class="dept-name">${item.dept}</span>
+                    </div>
+                    <div class="current-year-badge">${CURRENT_YEAR} 年</div>
+                </div>
+
+                <div class="current-standards">
+                    ${currentData ? formatCurrentYearDetails(currentData) : '<p class="no-data">尚未公佈 115 標準</p>'}
+                </div>
             </div>
-            <div class="history-grid">
-                ${yearsHtml}
+
+            <div class="card-history-section">
+                <div class="history-grid-wrapper">
+                    ${historyHtml}
+                </div>
             </div>
         `;
         resultsList.appendChild(row);
@@ -97,50 +103,33 @@ function renderComparisonResults(results) {
 }
 
 /**
- * 格式化每一年顯示的具體細節
+ * 專門格式化「今年 (115)」細節的函數
  */
-function formatYearDetails(data, year) {
+function formatCurrentYearDetails(data) {
     let html = '';
 
-    // 1. 處理「科目倍數」(加權) - 這是每一年都有的
-    if (data.科目倍數) {
-        const weights = Object.entries(data.科目倍數)
-            .map(([sub, w]) => `<span class="tag-weight">${sub}x${w}</span>`)
-            .join(' ');
-        html += `<div class="detail-section"><strong>加權：</strong><div class="tag-container">${weights}</div></div>`;
+    // 學測標準 (門檻)
+    if (data.學測標準) {
+        const gsat = Object.entries(data.學測標準)
+            .map(([sub, level]) => `<span class="gsat-pill"><strong>${sub}</strong> ${level}</span>`)
+            .join('');
+        html += `
+            <div class="std-section">
+                <label>學測門檻</label>
+                <div class="pills-wrapper">${gsat || '無'}</div>
+            </div>`;
     }
 
-    // 2. 區分「今年」與「往年」的特定數據
-    if (year === CURRENT_YEAR) {
-        // 今年：顯示學測標準
-        if (data.學測標準) {
-            const gsat = Object.entries(data.學測標準)
-                .map(([sub, level]) => `${sub}:${level}`)
-                .join(', ');
-            html += `<div class="detail-section gsat-std"><strong>學測門檻：</strong><br>${gsat || '無'}</div>`;
-        }
-    } else {
-        // 往年：顯示錄取分數與達標比例
-        const admitted = data.錄取人數 || 'N/A';
-        const score = data.一般考生錄取標準 || 'N/A';
-        const ratio = data.達標比例 ? `${data.達標比例}%` : 'N/A';
-        
+    // 科目倍數 (加權)
+    if (data.科目倍數) {
+        const weights = Object.entries(data.科目倍數)
+            .map(([sub, w]) => `<span class="weight-pill">${sub} <span class="weight-strong">${w}</span></span>`)
+            .join(`<span class="data-separator">|</span>`);
         html += `
-            <div class="result-metrics">
-                <div class="metric-item">
-                    <span class="m-label">錄取人數</span>
-                    <span class="m-value">${admitted}</span>
-                </div>
-                <div class="metric-item">
-                    <span class="m-label">加權平均</span>
-                    <span class="m-value">${score}</span>
-                </div>
-                <div class="metric-item">
-                    <span class="m-label">達標比例</span>
-                    <span class="m-value">${ratio}</span>
-                </div>
-            </div>
-        `;
+            <div class="std-section">
+                <label>分科加權</label>
+                <div class="pills-wrapper">${weights}</div>
+            </div>`;
     }
 
     return html;

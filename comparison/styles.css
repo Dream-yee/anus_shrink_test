@@ -72,100 +72,192 @@
     transform: translateY(0);
 }
 
+/* 卡片整體 */
 .comparison-row {
-    background: white;
-    margin-bottom: 15px;
-    padding: 20px;
+    background: #fff;
     border-radius: 16px;
-    display: grid;
-    grid-template-columns: 250px 1fr; /* 左側校系，右側三年數據 */
-    gap: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    animation: slideInUp 0.4s ease forwards;
-}
-
-.dept-info .uni-name { font-size: 12px; color: #888; }
-.dept-info .dept-name { font-size: 18px; font-weight: bold; display: block; }
-
-.history-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 112, 113, 114 */
-    gap: 10px;
-}
-
-.history-year-box {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-/* 修改 Comparison Row 佈局 */
-.comparison-row {
-    background: white;
-    margin-bottom: 20px;
-    padding: 25px;
-    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
     display: flex;
-    flex-direction: column; /* 手機端垂直，電腦端水平 */
-    gap: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    flex-direction: column;
 }
 
-@media (min-width: 900px) {
-    .comparison-row {
-        flex-direction: row;
-        align-items: flex-start;
-    }
-    .dept-info { width: 220px; flex-shrink: 0; }
-    .history-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+/* 上半部：115 資訊 */
+.card-main {
+    padding: 20px 25px 10px 25px;
 }
 
-/* 內容細節樣式 */
-.year-content {
-    text-align: left;
-    margin-top: 10px;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.detail-section { margin-bottom: 8px; }
-.detail-section strong { color: #555; font-size: 11px; }
-
-/* 加權標籤 */
-.tag-container { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
-.tag-weight {
-    background: #f0f7f0;
-    color: #4CAF50;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-    border: 1px solid #e0eee0;
-}
-
-/* 數據結果樣式 (往年) */
-.result-metrics {
+.dept-header {
     display: flex;
     justify-content: space-between;
-    background: #f8f9fa;
-    padding: 8px;
-    border-radius: 8px;
-    margin-top: 8px;
+    align-items: flex-start;
+    margin-bottom: 10px;
 }
 
-.metric-item { display: flex; flex-direction: column; align-items: center; flex: 1; }
-.m-label { font-size: 9px; color: #999; text-transform: uppercase; }
-.m-value { font-size: 14px; font-weight: bold; color: #333; }
+.uni-name { font-size: 13px; color: #888; display: block; margin-bottom: 2px; }
+.dept-name { font-size: 20px; font-weight: 800; color: #333; }
 
-/* 突出今年 */
-.highlight-year {
-    border: 1.5px solid #4CAF50;
-    background-color: #fff !important;
+.current-year-badge {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
 }
 
-.gsat-std {
-    color: #2196F3;
-    font-weight: 500;
+/* 115 標準展示 */
+.current-standards {
+    display: flex;
+    gap: 30px;
+}
+
+.std-section label {
+    display: block;
+    font-size: 13px;
+    color: #bbb;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.pills-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.gsat-pill, .weight-pill {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.gsat-pill { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+.weight-pill { background: #fff9db; color: #f08c00; border-color: #fff3bf; }
+
+/* 下半部：往年輔助資訊 */
+.card-footer {
+    background: #f8fafc;
+    border-top: 1px dashed #e2e8f0;
+    padding: 10px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-label { font-size: 11px; color: #94a3b8; font-weight: bold; }
+
+.history-tags-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.history-tag {
+    font-size: 13px;
+    display: flex;
+    gap: 6px;
+}
+
+.h-year { color: #94a3b8; font-weight: 500; }
+.m-score { font-weight: 700; color: #334155; }
+.m-ratio { color: #64748b; font-size: 12px; }
+
+.h-divider {
+    width: 1px;
+    height: 14px;
+    background: #e2e8f0;
+}
+
+/* 修改歷史資料區塊容器 */
+.card-history-section {
+    background: #fcfcfc;
+    border-top: 1px solid #f0f0f0;
+    padding: 12px 25px;
+}
+
+.history-grid-wrapper {
+    display: flex;
+    gap: 30px; /* 114年與113年的間距 */
+}
+
+.history-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* 歷史資料第一行：年份、人數、分數 */
+.h-top-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+}
+
+.h-year {
+    font-weight: 800;
+    color: #abb8c3;
+    min-width: 40px;
+}
+
+.h-admitted {
+    color: #666;
+    background: #f0f0f0;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.h-score {
+    font-weight: 700;
+    color: #444;
+}
+
+.h-score small {
+    font-weight: normal;
+    color: #999;
+    margin-left: 4px;
+}
+
+/* 歷史資料第二行：科目倍數 (用更小的字體與深灰色) */
+.h-weights {
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 沒資料時的樣式 */
+.no-data {
+    color: #ccc;
+    font-size: 12px;
+}
+
+/* 手機版適配 */
+@media (max-width: 600px) {
+    .history-grid-wrapper {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .h-weights {
+        white-space: normal;
+    }
+}
+
+/* 手機版適配：將今年標準改為垂直 */
+@media (max-width: 600px) {
+    .current-standards { flex-direction: column; gap: 15px; }
+    .card-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .h-divider { display: none; }
 }
 
 .year-label { font-size: 11px; color: #aaa; display: block; }
@@ -174,4 +266,117 @@
 @keyframes slideInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======================================================= */
+/* 17. 薄荷鼠尾草 (#76bfa2) 專屬色系方案 */
+/* ======================================================= */
+
+:root {
+    --sage-primary: #76bfa2;        /* 核心色：薄荷鼠尾草 */
+    --sage-light: #eef7f4;          /* 背景與標籤：極淺薄荷 */
+    --sage-medium: #b8dccf;         /* 輔助邊框：粉綠 */
+    --sage-dark: #3d6b59;           /* 強調文字：深森林綠 */
+    --bg-white: #ffffff;
+    --card-shadow: rgba(118, 191, 162, 0.12); /* 基於主色的柔和陰影 */
+}
+
+/* 網頁整體背景 */
+body {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; /* 假設使用 Inter 或系統無襯線字體 */
+    background-color: #f7f7f7; 
+    color: #444;
+}
+
+/* --- 搜尋框優化 --- */
+.search-input-wrapper {
+    border: 2px solid var(--sage-light);
+    box-shadow: 0 8px 25px var(--card-shadow);
+}
+
+.search-input-wrapper:focus-within {
+    border-color: var(--sage-primary);
+}
+
+/* --- 校系卡片樣式 --- */
+.comparison-row {
+    background: var(--bg-white);
+    border: 1px solid var(--sage-light);
+    box-shadow: 0 4px 12px var(--card-shadow);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.comparison-row:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(118, 191, 162, 0.2);
+}
+
+/* 115 招生標籤：白字配主色 */
+.current-year-badge {
+    background-color: var(--sage-primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* 學測標籤：淺綠底深綠字 */
+.gsat-pill {
+    background: var(--sage-light);
+    color: var(--sage-dark);
+    border: 1px solid var(--sage-medium);
+}
+
+/* 加權標籤：白底主色框 */
+.weight-pill {
+    padding: 4px 0;
+    background: white;
+    color: var(--sage-dark);
+    border: 0;
+    border-radius: 0;
+    display: inline-block; /* 確保 margin 屬性可以正確應用 */
+}
+
+/* --- 往年參考區塊 --- */
+.card-history-section {
+    background: #fdfdfd; /* 保持輕盈 */
+    border-top: 1px dashed var(--sage-medium);
+    padding: 15px 25px;
+}
+
+.h-year {
+    color: #777f8a;
+    font-weight: 800;
+}
+
+.h-admitted {
+    background: var(--sage-light);
+    color: var(--sage-dark);
+    font-weight: bold;
+}
+
+.h-score {
+    color: var(--sage-dark);
+}
+
+.h-weights {
+    color: #7a8a84; /* 帶一點綠調的灰 */
+}
+
+.data-separator {
+    color: #cccccc; /* 極淺灰色，柔和分隔線 */
+    font-size: 1.5em; /* 與周圍文字大小相同 */
+    font-weight: 300; /* 輕字重，降低存在感 */
+    height: 100%;
+    margin: 0 3px;   /* 🌟 核心間距：左右各 8px 創造呼吸空間 */
+    display: inline-block; /* 確保 margin 屬性可以正確應用 */
+    /* 移除 data-tag 上的 margin-right 避免過大的間隔 */
+}
+
+.weight-strong {
+    color: #77BFA2;
+    font-weight: 700;
 }
