@@ -67,21 +67,13 @@ function get_result(query) {
         return;
     }
 
-    const kws = trimmedQuery.toLowerCase().split(/\s+/).filter(k => k.length > 0);
+    const kws = trimmedQuery.toLowerCase().replaceAll("台", "臺").split(/\s+/).filter(k => k.length > 0);
     
     const results = [];
-
-    const keywords = [];
-    for(let k_origin of kws) {
-        let k = k_origin.replaceAll("台", "臺") // 可不可以規範一下，求求了
-        keywords.push(k);
-        if(k_origin.includes("台"))
-            keywords.push(k_origin);
-    }
     
     flattenedSchoolData.forEach(item => {
-        const uniLower = item.uni.toLowerCase();
-        const deptLower = item.dept.toLowerCase();
+        const uniLower = item.uni.replaceAll("台", "臺").toLowerCase();
+        const deptLower = item.dept.replaceAll("台", "臺").toLowerCase();
         let score = 0;
 
         // --- 核心匹配邏輯 --
@@ -89,7 +81,7 @@ function get_result(query) {
         let dept_matched = 0;
 
         // 學校
-        for(let k of keywords) {
+        for(let k of kws) {
             if(uniLower.includes(k) || (SCHOOL_ALIASES[k] !== undefined && SCHOOL_ALIASES[k].includes(uniLower))) 
                 school_matched++;
             if(deptLower.includes(k) || (DEPT_ALIASES[k] !== undefined && DEPT_ALIASES[k].some(dept => deptLower.includes(dept))))
