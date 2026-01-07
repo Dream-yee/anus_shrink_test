@@ -68,7 +68,6 @@ function get_result(query) {
     }
 
     const kws = trimmedQuery.toLowerCase().replaceAll("台", "臺").split(/\s+/).filter(k => k.length > 0);
-    
     const results = [];
     
     flattenedSchoolData.forEach(item => {

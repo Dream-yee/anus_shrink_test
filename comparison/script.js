@@ -18,6 +18,14 @@ const GUESSING = [
     "教育大學 師範 幼兒 特殊教育"
 ]
 
+
+// 儲存目前的過濾狀態
+const filterState = {
+    include: [], // 必須採計的科目
+    exclude: []  // 不能採計的科目
+};
+
+
 let inputSuggestion = document.getElementById("input-suggesion");
 
 async function loadData() {
@@ -72,13 +80,24 @@ const TARGET_YEARS = [CURRENT_YEAR - 3, CURRENT_YEAR - 2, CURRENT_YEAR - 1, CURR
 function renderComparisonResults(results) {
     resultsList.innerHTML = '';
     
-    results.slice(0, 100).forEach((res) => {
+    let i = 0;
+
+    for(const res of results) {
+        
         const item = res.item;
         const row = document.createElement('div');
         row.classList.add('comparison-row');
 
         const currentData = schoolData[item.uni][item.dept][CURRENT_YEAR];
+
+        // exclude filter
+        if(filterState.exclude.some(k => (currentData["科目倍數"] != undefined && currentData["科目倍數"][k] !== undefined) || (currentData["學測標準"] != undefined && currentData["學測標準"][k] !== undefined))) 
+            continue;
         
+        // include filter
+        if(!filterState.include.every(k => (currentData["科目倍數"] !== undefined && currentData["科目倍數"][k] !== undefined) || (currentData["學測標準"] !== undefined && currentData["學測標準"][k] !== undefined)))
+            continue;
+
         // 準備 114, 113 的詳細輔助 HTML
         let historyYears = TARGET_YEARS.filter(y => y !== CURRENT_YEAR);
         if (window.innerWidth < 600) 
@@ -133,7 +152,10 @@ function renderComparisonResults(results) {
             </div>
         `;
         resultsList.appendChild(row);
-    });
+
+        i++;
+        if(i === 100) break;
+    }
 }
 
 /**
@@ -168,5 +190,31 @@ function formatCurrentYearDetails(data) {
 
     return html;
 }
+
+const filterItems = document.querySelectorAll('.filter-item');
+
+filterItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const subject = item.dataset.subject;
+
+        if (!item.classList.contains('include') && !item.classList.contains('exclude')) {
+            // 狀態 0 -> 1: 變成必選
+            item.classList.add('include');
+            filterState.include.push(subject);
+        } else if (item.classList.contains('include')) {
+            // 狀態 1 -> 2: 變成排除
+            item.classList.remove('include');
+            item.classList.add('exclude');
+            filterState.include = filterState.include.filter(s => s !== subject);
+            filterState.exclude.push(subject);
+        } else {
+            // 狀態 2 -> 0: 回到中立
+            item.classList.remove('exclude');
+            filterState.exclude = filterState.exclude.filter(s => s !== subject);
+        }
+        if(searchInput.value.length !== 0)
+            searching(searchInput.value);
+    });
+});
 
 document.addEventListener('DOMContentLoaded', loadData);

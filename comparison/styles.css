@@ -436,3 +436,120 @@ body {
     cursor: pointer;
     text-decoration: underline;
 }
+
+/* ======================================================= */
+/* 18. Filter Island 篩選島樣式 */
+/* ======================================================= */
+
+#filter-island-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+.filter-hint {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--sage-dark);
+    white-space: nowrap;
+    border-right: 1px solid var(--sage-medium);
+    padding-right: 12px;
+}
+
+/* 移除捲軸顯示 */
+.filter-subjects::-webkit-scrollbar { display: none; }
+
+.filter-item {
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    background: white;
+    color: #888;
+    border: 1px solid #eee;
+    transition: all 0.2s;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.filter-island {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--sage-medium);
+    border-radius: 28px; /* 稍微減少圓角讓它更有洗鍊感 */
+    padding: 12px 20px;
+    display: flex;
+    flex-direction: column; /* 垂直排列兩排 */
+    gap: 10px;
+    box-shadow: 0 15px 45px rgba(118, 191, 162, 0.25);
+    width: max-content;
+    max-width: 90vw;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.filter-label {
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--sage-primary);
+    background: var(--sage-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filter-subjects {
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    overflow-x: auto;
+}
+
+/* 兩排之間的細線 */
+.filter-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sage-medium), transparent);
+    width: 100%;
+    opacity: 0.5;
+}
+
+/* 三種狀態的樣式 */
+/* 1. 必選 (Include) */
+.filter-item.include {
+    background: var(--sage-primary);
+    color: white;
+    border-color: var(--sage-primary);
+}
+/* .filter-item.include::before { content: ""; } */
+
+/* 2. 排除 (Exclude) */
+.filter-item.exclude {
+    background: #ff7675; /* 柔和的紅 */
+    color: white;
+    border-color: #ff7675;
+}
+/* .filter-item.exclude::before { content: "✕ "; } */
+
+/* 懸浮縮放 */
+.filter-item:hover { transform: scale(1.05); }
+
+@media (max-width: 600px) {
+    #filter-island-container {
+        bottom: 0;
+    }
+
+    .filter-island {
+        border-radius: 0;
+    }
+}
