@@ -553,3 +553,8 @@ body {
         border-radius: 0;
     }
 }
+
+#you-cant-see-me {
+    color: #f7f7f7;
+    height: 120px;
+}
