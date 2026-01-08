@@ -75,7 +75,7 @@ function searching(query) {
 
 // --- 設定當前年份 ---
 const CURRENT_YEAR = 115;
-const TARGET_YEARS = [CURRENT_YEAR - 3, CURRENT_YEAR - 2, CURRENT_YEAR - 1, CURRENT_YEAR];
+const TARGET_YEARS = [CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2, CURRENT_YEAR - 3];
 
 function renderComparisonResults(results) {
     resultsList.innerHTML = '';
@@ -100,8 +100,6 @@ function renderComparisonResults(results) {
 
         // 準備 114, 113 的詳細輔助 HTML
         let historyYears = TARGET_YEARS.filter(y => y !== CURRENT_YEAR);
-        if (window.innerWidth < 600) 
-            historyYears = historyYears.reverse()
         const historyHtml = historyYears.map(year => {
             let yearData = schoolData[item.uni][item.dept][year];
             let data;
