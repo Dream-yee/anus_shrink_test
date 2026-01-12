@@ -145,6 +145,7 @@ function renderComparisonResults(results, append = false) {
                     <div class="titles">
                         <span class="uni-name">${item.uni}</span>
                         <span class="dept-name">${item.dept}</span>
+                        <span class="h-admitted">核定 ${schoolData[item.uni][item.dept][CURRENT_YEAR].核定人數 || '--'} 人</span>
                     </div>
                 </div>
 
