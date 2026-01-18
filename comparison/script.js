@@ -134,6 +134,14 @@ function renderComparisonResults(results, append = false) {
 
         row.innerHTML = `
             <div class="card-main">
+                <a href="../?school=${item.uni}&dept=${item.dept}" class="jump-link" title="查看詳細分析">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                </a>
+                
                 <div class="dept-header">
                     <div class="titles">
                         <span class="uni-name">${item.uni}</span>

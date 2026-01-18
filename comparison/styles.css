@@ -575,3 +575,40 @@ body {
 html {
     scroll-behavior: smooth;
 }
+
+/* --- 跳轉圖示樣式 --- */
+.card-main {
+    position: relative; /* 讓 jump-link 可以絕對定位 */
+}
+
+.jump-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sage-medium); /* 預設使用較淡的綠 */
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    z-index: 10;
+}
+
+.jump-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.jump-link:hover {
+    background-color: var(--sage-light); /* 淺色底 */
+    color: var(--sage-primary); /* 深色圖示 */
+    transform: scale(1.1);
+}
+
+/* 修正標題區域不要被圖示擋到 */
+.dept-header {
+    padding-right: 40px; 
+}
