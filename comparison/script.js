@@ -108,36 +108,29 @@ function renderComparisonResults(results, append = false) {
         if(!filterState.include.every(k => (currentData["科目倍數"] !== undefined && currentData["科目倍數"][k] !== undefined) || (currentData["學測標準"] !== undefined && currentData["學測標準"][k] !== undefined)))
             continue;
 
-        // 準備 114, 113 的詳細輔助 HTML
-        let historyYears = TARGET_YEARS.filter(y => y !== CURRENT_YEAR);
-        const historyHtml = historyYears.map(year => {
-            let yearData = schoolData[item.uni][item.dept][year];
-            let data;
-            if(year === Number.toString(CURRENT_YEAR))
-                data = yearData;
-            else if (yearData !== undefined) data = yearData[0];
-            if(year !== Number.toString(CURRENT_YEAR) && yearData !== undefined && yearData.length > 1) {
-                return `<div class="history-block no-data">${year}年 該科系尚未合併</div>`;
-            }
-            else if (data !== undefined) {
-                
-                // 格式化往年的科目倍數（小標籤）
-                const weights = Object.entries(data.科目倍數)
-                    .map(([sub, w]) => `${sub} ${w}`).join(', ');
-                
-                return `
+        // 準備 114, 113 的詳細輔助 HTML;
+        
+        let historyHtml = "";
+
+        for(const data of schoolData[item.uni][item.dept][CURRENT_YEAR - 1]) {
+
+            const weights = Object.entries(data.科目倍數)
+                .map(([sub, w]) => `${sub} ${w}`).join(', ');
+            historyHtml += `
                     <div class="history-block">
                         <div class="h-top-line">
-                            <span class="h-year">${year}年</span>
-                            <span class="h-admitted">${data.錄取人數 || '--'}人</span>
+                            ${ item.dept !== data["校系名稱"] ? `<span class="h-year">${data["校系名稱"]}</span>` : "" }
                             <span class="h-score">加權平均: ${data.一般考生錄取標準 || '--'} <small>(前${data.達標比例 || '--'}%)</small></span>
+                            <span class="h-admitted">${data.錄取人數 || '--'}人</span>
                         </div>
                         <div class="h-weights">${weights}</div>
                     </div>
                 `;
-            }
-            return `<div class="history-block no-data">${year}年 無資料</div>`;
-        }).join('');
+        }
+
+        if(historyHtml.length === 0) {
+            historyHtml += `<div class="history-block no-data">${year}年 無資料</div>`
+        }
 
         row.innerHTML = `
             <div class="card-main">
@@ -156,6 +149,7 @@ function renderComparisonResults(results, append = false) {
 
             <div class="card-history-section">
                 <div class="history-grid-wrapper">
+                    <span class="h-year">去年</span>
                     ${historyHtml}
                 </div>
             </div>
@@ -236,7 +230,7 @@ filterItems.forEach(item => {
 });
 
 // 防抖函數
-function debounce(func, delay = 200) {
+function debounce(func, delay = 50) {
     let timer;
     return (...args) => {
         clearTimeout(timer);
