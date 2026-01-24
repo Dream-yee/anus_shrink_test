@@ -16,6 +16,15 @@ https://www.ilovepdf.com/pdf_to_excel 用這個轉，超強
 2. 用get_all_details.py得到今年的結果，就這樣，記得script.js的年次要改
 
 
+---- 2026.01.24 ----
+
+我才發現我沒有給以後的我寫怎麼取新的年份的校系分則的instruction
+
+進大考查校系分則的那個東西把全部的校系都弄出來 (底下那個依學測什麼都不勾直接選模糊篩選就會全部都有了)
+把整個網頁 ctrl + S, 丟進datas/新一年/AST_school.html
+跑 get_new_criteria.py 記得改上面的年份
+
+好了就可以繼續往下了
 
 ---- 2025.12.07 ----
 
@@ -40,4 +49,5 @@ https://www.ilovepdf.com/pdf_to_excel 用這個轉，超強
 
 7. 用 deparment_renaming.py 跑 /datas/最新民國年/dept_renamed.csv 得到 dept_renamed.json
 
-7. 跑 data_integrator.py 把這幾年的結果合起來, 前面的constant valuable記得改, 這樣就可以了, 啾咪2026年八月的温力翰
+7. 跑 data_integrator.py 把這幾年的結果合起來, 前面的constant valuable記得改, 這樣就可以了
+

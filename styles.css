@@ -131,6 +131,10 @@ body {
     /* margin-bottom: 25px; */
 }
 
+.box-title {
+    white-space: nowrap;
+}
+
 h5 {
     color: #333;
     font-size: 15px;
@@ -886,4 +890,33 @@ body.dark-mode .input-unit input {
     .left-handed .fab-button {
         border-radius: 0 20px 20px 0;
     }
+}
+
+.to-uac-button {
+    border: none;
+    background-color: #33333300;
+}
+
+.box-title form {
+    display: inline;
+}
+
+.jump-link {
+    /* width:  */
+    color: #55A692; /* 預設使用較淡的綠 */
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    z-index: 10;
+}
+
+.jump-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.jump-link:hover {
+    background-color: #c6c6c636; /* 淺色底 */
+    color: #52a894; /* 深色圖示 */
+    transform: scale(1.1);
 }

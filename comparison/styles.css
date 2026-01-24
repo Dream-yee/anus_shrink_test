@@ -584,16 +584,20 @@ html {
 }
 
 /* --- 跳轉圖示樣式 --- */
-.card-main {
+.history-grid-wrapper .card-main {
     position: relative; /* 讓 jump-link 可以絕對定位 */
+}
+
+.to-uac-button {
+    border: none;
+    background-color: #33333300;
 }
 
 .jump-link {
     position: absolute;
-    top: 20px;
     right: 20px;
     width: 32px;
-    height: 32px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;

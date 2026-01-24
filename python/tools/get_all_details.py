@@ -2,11 +2,9 @@ import requests
 import json
 from typing import Dict, List, Any, Tuple
 import time
-from extract_department_details import extract_table_data
+from tools.extract_department_details import extract_table_data
 
 # --- 設定常數 ---
-EID_FILE = 'department_eids.json'
-ALL_DETAILS_FILE = 'all_department_criteria.json'
 POST_URL = 'https://uac2.ncku.edu.tw/cross_search/index.php?c=search&m=detail'
 
 def get_department_html_responses(eids_data) -> List[Tuple[str, str, str, str]]:
@@ -53,7 +51,8 @@ def get_department_html_responses(eids_data) -> List[Tuple[str, str, str, str]]:
             response.encoding = 'utf-8' 
             html_content = response.text
             result[expected_uni][expected_dept] = extract_table_data(html_content, expected_uni, expected_dept)
-                    
+            result[expected_uni][expected_dept]["id"] = eid
+
             print(f"進度：({index + 1}/{total_eids}) 成功獲取 EID {eid} ({expected_uni} - {expected_dept}) ")
             
         except requests.exceptions.RequestException as e:
