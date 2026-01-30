@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dream-yee.github.io/asthma/sitemap.xml
